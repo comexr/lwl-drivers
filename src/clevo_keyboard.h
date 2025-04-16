@@ -467,8 +467,10 @@ static bool clevo_fn_lock_available(void){
 	// but Aura Gen3 refresh (NL45AU2 und NL57AU) has working Fn Lock
 	if ((dmi_match(DMI_PRODUCT_SKU, "AURA14GEN3") ||
 	     dmi_match(DMI_PRODUCT_SKU, "AURA15GEN3")) &&
-	    (dmi_match(DMI_BOARD_NAME, "NL57PU") ||
-	     dmi_match(DMI_BOARD_NAME, "NL45PU2")))
+		(dmi_match(DMI_BOARD_NAME, "NL57PU") ||
+	     dmi_match(DMI_BOARD_NAME, "NL45PU2")) &&
+	    (dmi_match(DMI_BOARD_NAME, "V64x_v65xAU") ||
+	     dmi_match(DMI_BOARD_NAME, "V64x_v65xAU")))
 			return 0;
 
 	// check Fn lock for WMI
