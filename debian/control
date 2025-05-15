@@ -1,18 +1,17 @@
 Source: lwl-drivers
 Section: devel
 Priority: optional
-Maintainer: TUXEDO Computers GmbH <tux@tuxedocomputers.com>
+Maintainer: Comexr B.V. <info@comexr.com>
 Build-Depends: debhelper-compat (= 13), dh-sequence-dkms
 Rules-Requires-Root: no
 Standards-Version: 4.6.0
-Homepage: https://tuxedocomputers.com
-Vcs-Browser: https://github.com/tuxedocomputers/lwl-drivers
-Vcs-Git: https://github.com/tuxedocomputers/lwl-drivers.git
+Homepage: https://laptopwithlinux.com
+Vcs-Browser: https://github.com/comexr/lwl-drivers
+Vcs-Git: https://github.com/comexr/lwl-drivers.git
 
 Package: lwl-drivers
 Architecture: all
 Depends: ${misc:Depends}
-Recommends: udev-hid-bpf
 Provides: lwl-keyboard (= 4.0.0)
 Replaces: lwl-cc-wmi (<< 4.0.0~), lwl-keyboard (<< 4.0.0~),
  lwl-keyboard-dkms (<< 4.0.0~), lwl-keyboard-ite (<< 4.0.0~),
@@ -24,5 +23,5 @@ Breaks: lwl-cc-wmi (<< 4.0.0~), lwl-keyboard (<< 4.0.0~),
  lwl-touchpad-fix (<< 4.0.0~), lwl-wmi-dkms (<< 4.0.0~),
  lwl-xp-xc-airplane-mode-fix (<< 4.0.0~),
  lwl-xp-xc-touchpad-key-fix (<< 4.0.0~)
-Description: Kernel modules for TUXEDO devices
- Drivers for several platform devices for TUXEDO notebooks meant for DKMS.
+Description: Kernel modules for lwl devices
+ Drivers for several platform devices for lwl notebooks meant for DKMS.
