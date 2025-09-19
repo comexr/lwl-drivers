@@ -1,0 +1,2 @@
+obj-m += tuxi_acpi.o
+obj-m += lwl_tuxi_fan_control.o

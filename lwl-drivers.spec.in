@@ -1,0 +1,64 @@
+Name:           lwl-drivers
+Version:        #MODULE_VERSION#
+Release:        1%{?dist}
+Summary:        Kernel modules for TUXEDO devices
+
+License:        GPLv2+
+Url:            https://www.tuxedocomputers.com
+Source0:        %{name}-%{version}.tar.xz
+
+Requires:       dkms >= 2.1
+Recommends:     udev-hid-bpf
+
+BuildArch:      noarch
+
+Provides:       lwl-cc-wmi = 4.0.0-1
+Provides:       lwl-keyboard = 4.0.0-1
+Provides:       lwl-keyboard-dkms = 4.0.0-1
+Provides:       lwl-keyboard-ite = 4.0.0-1
+Provides:       lwl-touchpad-fix = 4.0.0-1
+Provides:       lwl-wmi-dkms = 4.0.0-1
+Provides:       lwl-xp-xc-airplane-mode-fix = 4.0.0-1
+Provides:       lwl-xp-xc-touchpad-key-fix = 4.0.0-1
+Obsoletes:      lwl-cc-wmi < 4.0.0-1
+Obsoletes:      lwl-keyboard < 4.0.0-1
+Obsoletes:      lwl-keyboard-dkms < 4.0.0-1
+Obsoletes:      lwl-keyboard-ite < 4.0.0-1
+Obsoletes:      lwl-touchpad-fix < 4.0.0-1
+Obsoletes:      lwl-wmi-dkms < 4.0.0-1
+Obsoletes:      lwl-xp-xc-airplane-mode-fix < 4.0.0-1
+Obsoletes:      lwl-xp-xc-touchpad-key-fix < 4.0.0-1
+
+Group:          Hardware/Other
+Packager:       TUXEDO Computers GmbH <tux@tuxedocomputers.com>
+
+%description
+Drivers for several platform devices for TUXEDO notebooks meant for DKMS.
+
+%prep
+%setup -q
+
+%install
+cp -r %{_builddir}/%{name}-%{version}/usr %{buildroot}
+cp -r %{_builddir}/%{name}-%{version}/etc %{buildroot}
+
+%files
+%{_usrsrc}/%{name}-%{version}
+%license LICENSE
+/usr/lib/udev/hwdb.d/61-keyboard-tuxedo.hwdb
+/usr/lib/udev/hwdb.d/61-sensor-tuxedo.hwdb
+/usr/lib/udev/rules.d/99-lwl-fix-infinity-flex-touchpanel-toggle.rules
+/usr/lib/udev/rules.d/99-lwl-fix-intel-gen13-sleep-state.rules
+/usr/lib/udev/rules.d/99-lwl-fix-nb02-touchpad-mouse.rules
+/usr/lib/udev/rules.d/99-lwl-fix-pulse-gen2-wakeup-through-nvme-controller.rules
+/usr/lib/udev/rules.d/99-lwl-fix-realtek-rts522a-idle-behaviour.rules
+/usr/lib/udev/rules.d/99-lwl-fix-systemd-led-bootdelay.rules
+%config(noreplace) %{_sysconfdir}/modprobe.d/lwl_keyboard.conf
+
+%post
+dkms add -m %{name} -v %{version} --rpm_safe_upgrade
+dkms build -m %{name} -v %{version}
+dkms install -m %{name} -v %{version}
+
+%preun
+dkms remove -m %{name} -v %{version} --all --rpm_safe_upgrade

@@ -1,7 +1,7 @@
 #!/bin/gawk -f
 
 BEGIN {
-    RS="(^|\n)tuxedo-(keyboard-ite|keyboard|drivers) "
+    RS="(^|\n)lwl-(keyboard-ite|keyboard|drivers) "
     FS="\n"
     print "%changelog"
 }
