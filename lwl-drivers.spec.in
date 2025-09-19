@@ -43,11 +43,16 @@ cp -r %{_builddir}/%{name}-%{version}/etc %{buildroot}
 
 %files
 %{_usrsrc}/%{name}-%{version}
-%config(noreplace) %{_sysconfdir}/modprobe.d/lwl_keyboard.conf
 %license LICENSE
-/usr/lib/udev/rules.d/99-z-lwl-systemd-fix.rules
-/usr/lib/udev/rules.d/99-infinityflex-touchpanel-toggle.rules
-/usr/lib/udev/hwdb.d/61-sensor-infinityflex.hwdb
+/usr/lib/udev/hwdb.d/61-keyboard-tuxedo.hwdb
+/usr/lib/udev/hwdb.d/61-sensor-tuxedo.hwdb
+/usr/lib/udev/rules.d/99-lwl-fix-infinity-flex-touchpanel-toggle.rules
+/usr/lib/udev/rules.d/99-lwl-fix-intel-gen13-sleep-state.rules
+/usr/lib/udev/rules.d/99-lwl-fix-nb02-touchpad-mouse.rules
+/usr/lib/udev/rules.d/99-lwl-fix-pulse-gen2-wakeup-through-nvme-controller.rules
+/usr/lib/udev/rules.d/99-lwl-fix-realtek-rts522a-idle-behaviour.rules
+/usr/lib/udev/rules.d/99-lwl-fix-systemd-led-bootdelay.rules
+%config(noreplace) %{_sysconfdir}/modprobe.d/tuxedo_keyboard.conf
 
 %post
 dkms add -m %{name} -v %{version} --rpm_safe_upgrade
