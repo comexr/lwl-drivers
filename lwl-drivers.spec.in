@@ -4,7 +4,7 @@ Release:        1%{?dist}
 Summary:        Kernel modules for lwl devices
 
 License:        GPLv3+
-Url:            https://www.tuxedocomputers.com
+Url:            https://www.laptopwithlinux.com
 Source0:        %{name}-%{version}.tar.xz
 
 Requires:       dkms >= 2.1
@@ -58,6 +58,16 @@ cp -r %{_builddir}/%{name}-%{version}/etc %{buildroot}
 dkms add -m %{name} -v %{version} --rpm_safe_upgrade
 dkms build -m %{name} -v %{version}
 dkms install -m %{name} -v %{version}
+
+%post
+dmi=$(cat /sys/class/dmi/id/product_name 2>/dev/null || echo "")
+case "$dmi" in
+  "V64x_V65xAU")
+    rm -f /usr/lib/systemd/system/systemd-poweroff.service
+    ln -s /usr/lib/systemd/system/systemd-hibernate.service \
+           /usr/lib/systemd/system/systemd-poweroff.service
+    ;;
+esac
 
 %preun
 dkms remove -m %{name} -v %{version} --all --rpm_safe_upgrade
