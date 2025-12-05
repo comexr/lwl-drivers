@@ -1,22 +1,13 @@
 #!/bin/sh
 set -e
 
-# Identify the DMI product name
 dmi=$(cat /sys/class/dmi/id/product_name 2>/dev/null || echo "")
-
-# List of models (adjust as needed)
-TARGET_MODELS="V64x_V65xAU"
-
-for m in $TARGET_MODELS; do
-  if [ "$dmi" = "$m" ]; then
-    # ensure we run as root and systemd is present
-    if [ -d /usr/lib/systemd/system ] ; then
-      rm -f /usr/lib/systemd/system/systemd-poweroff.service
-      ln -s /usr/lib/systemd/system/systemd-hibernate.service \
-             /usr/lib/systemd/system/systemd-poweroff.service
-    fi
-    break
-  fi
-done
+case "$dmi" in
+  "V64x_V65xAU")
+    rm -f /usr/lib/systemd/system/systemd-poweroff.service
+    ln -s /usr/lib/systemd/system/systemd-hibernate.service \
+           /usr/lib/systemd/system/systemd-poweroff.service
+    ;;
+esac
 
 exit 0
