@@ -5,6 +5,7 @@ Summary:        Kernel modules for lwl devices
 
 License:        GPLv2+
 Url:            https://www.laptopwithlinux.com
+Source0:        %{name}-%{version}.tar.xz
 
 Requires:       dkms >= 2.1
 Recommends:     udev-hid-bpf
