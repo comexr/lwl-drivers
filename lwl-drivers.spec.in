@@ -45,8 +45,8 @@ cp -r %{_builddir}/%{name}-%{version}/usr %{buildroot}
 %{_usrsrc}/%{name}-%{version}
 %license LICENSE
 /usr/lib/modprobe.d/lwl-drivers-backlist-upstream-conflicts.conf
-/usr/lib/udev/hwdb.d/61-keyboard-tuxedo.hwdb
-/usr/lib/udev/hwdb.d/61-sensor-tuxedo.hwdb
+/usr/lib/udev/hwdb.d/61-keyboard-lwl.hwdb
+/usr/lib/udev/hwdb.d/61-sensor-lwl.hwdb
 /usr/lib/udev/rules.d/99-lwl-fix-huawei-lte-modules-correct-drivers.rules
 /usr/lib/udev/rules.d/99-lwl-fix-infinity-flex-touchpanel-toggle.rules
 /usr/lib/udev/rules.d/99-lwl-fix-intel-gen13-sleep-state.rules
