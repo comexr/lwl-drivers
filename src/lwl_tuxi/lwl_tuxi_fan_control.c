@@ -341,7 +341,7 @@ static const struct hwmon_chip_info hwminfo = {
 	.info = hwmcinfo
 };
 
-static int __init tuxedo_tuxi_fan_control_probe(struct platform_device *pdev)
+static int __init lwl_tuxi_fan_control_probe(struct platform_device *pdev)
 {
 	int err;
 	u16 temp, rpm;
@@ -365,7 +365,7 @@ static int __init tuxedo_tuxi_fan_control_probe(struct platform_device *pdev)
 
 	if(tuxi_get_fan_temp(0, &temp) == 0 && tuxi_get_fan_rpm(0, &rpm) == 0) {
 		hwmdev = devm_hwmon_device_register_with_info(&pdev->dev,
-							      "tuxedo_tuxi_sensors",
+							      "lwl_tuxi_sensors",
 							      NULL,
 							      &hwminfo,
 							      NULL);
@@ -378,9 +378,9 @@ static int __init tuxedo_tuxi_fan_control_probe(struct platform_device *pdev)
 }
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(6, 11, 0)
-static int tuxedo_tuxi_fan_control_remove(struct platform_device *pdev)
+static int lwl_tuxi_fan_control_remove(struct platform_device *pdev)
 #else
-static void tuxedo_tuxi_fan_control_remove(struct platform_device *pdev)
+static void lwl_tuxi_fan_control_remove(struct platform_device *pdev)
 #endif
 {
 	pr_debug("driver remove\n");
@@ -392,13 +392,13 @@ static void tuxedo_tuxi_fan_control_remove(struct platform_device *pdev)
 #endif
 }
 
-static struct platform_device *tuxedo_tuxi_fan_control_device;
-static struct platform_driver tuxedo_tuxi_fan_control_driver = {
-	.driver.name = "tuxedo_fan_control",
-	.remove = tuxedo_tuxi_fan_control_remove,
+static struct platform_device *lwl_tuxi_fan_control_device;
+static struct platform_driver lwl_tuxi_fan_control_driver = {
+	.driver.name = "lwl_fan_control",
+	.remove = lwl_tuxi_fan_control_remove,
 };
 
-static int __init tuxedo_tuxi_fan_control_init(void)
+static int __init lwl_tuxi_fan_control_init(void)
 {
 	int err;
 	u8 dummy;
@@ -408,24 +408,24 @@ static int __init tuxedo_tuxi_fan_control_init(void)
 	if (err == -ENODEV)
 		return err;
 
-	tuxedo_tuxi_fan_control_device =
-		platform_create_bundle(&tuxedo_tuxi_fan_control_driver,
-				       tuxedo_tuxi_fan_control_probe, NULL, 0, NULL, 0);
+	lwl_tuxi_fan_control_device =
+		platform_create_bundle(&lwl_tuxi_fan_control_driver,
+				       lwl_tuxi_fan_control_probe, NULL, 0, NULL, 0);
 
-	if (IS_ERR(tuxedo_tuxi_fan_control_device))
-		return PTR_ERR(tuxedo_tuxi_fan_control_device);
+	if (IS_ERR(lwl_tuxi_fan_control_device))
+		return PTR_ERR(lwl_tuxi_fan_control_device);
 
 	return 0;
 }
 
-static void __exit tuxedo_tuxi_fan_control_exit(void)
+static void __exit lwl_tuxi_fan_control_exit(void)
 {
-	platform_device_unregister(tuxedo_tuxi_fan_control_device);
-	platform_driver_unregister(&tuxedo_tuxi_fan_control_driver);
+	platform_device_unregister(lwl_tuxi_fan_control_device);
+	platform_driver_unregister(&lwl_tuxi_fan_control_driver);
 }
 
-module_init(tuxedo_tuxi_fan_control_init);
-module_exit(tuxedo_tuxi_fan_control_exit);
+module_init(lwl_tuxi_fan_control_init);
+module_exit(lwl_tuxi_fan_control_exit);
 
 MODULE_AUTHOR("TUXEDO Computers GmbH <tux@tuxedocomputers.com>");
 MODULE_DESCRIPTION("TUXEDO Computers TUXI fan control driver");

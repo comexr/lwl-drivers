@@ -18,7 +18,7 @@
  * with this program; if not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "tuxedo_compatibility_check.h"
+#include "lwl_compatibility_check.h"
 
 #include <linux/module.h>
 #include <linux/dmi.h>
@@ -35,7 +35,7 @@
 
 // This check was not in place before 2023, so we continue to assume
 // compatibility for devices <= Intel Core i 12th Gen and <= AMD Ryzen 5th Gen
-static const struct x86_cpu_id skip_tuxedo_dmi_string_check_match[] = {
+static const struct x86_cpu_id skip_lwl_dmi_string_check_match[] = {
 #if LINUX_VERSION_CODE < KERNEL_VERSION(6, 12, 0)
 	X86_MATCH_INTEL_FAM6_MODEL(CORE_YONAH, NULL),
 	X86_MATCH_INTEL_FAM6_MODEL(CORE2_MEROM, NULL),
@@ -195,12 +195,12 @@ static const struct x86_cpu_id skip_tuxedo_dmi_string_check_match[] = {
 };
 
 // Placeholder for potential future exemptions
-static const struct x86_cpu_id force_tuxedo_dmi_string_check_match[] = {
+static const struct x86_cpu_id force_lwl_dmi_string_check_match[] = {
 	{ }
 };
 
 // Going forward we only run the drivers on in house tested devices
-static const struct dmi_system_id tuxedo_dmi_string_match[] = {
+static const struct dmi_system_id lwl_dmi_string_match[] = {
 	{
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
@@ -219,15 +219,10 @@ static const struct dmi_system_id tuxedo_dmi_string_match[] = {
 	{ }
 };
 
-bool tuxedo_is_compatible(void) {
-	if (dmi_check_system(tuxedo_dmi_string_match)
-	    || (x86_match_cpu(skip_tuxedo_dmi_string_check_match)
-	    && !x86_match_cpu(force_tuxedo_dmi_string_check_match))) {
-		return true;
-	}
-	return false;
+bool lwl_is_compatible(void) {
+	return true;
 }
-EXPORT_SYMBOL(tuxedo_is_compatible);
+EXPORT_SYMBOL(lwl_is_compatible);
 
 MODULE_AUTHOR("TUXEDO Computers GmbH <tux@tuxedocomputers.com>");
 MODULE_DESCRIPTION("Provide check for other modules if driver package is known compatible");

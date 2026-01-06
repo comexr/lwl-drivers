@@ -32,7 +32,7 @@
 #include <linux/dmi.h>
 #include "../clevo_interfaces.h"
 #include "../uniwill_interfaces.h"
-#include "tuxedo_io_ioctl.h"
+#include "lwl_io_ioctl.h"
 
 MODULE_DESCRIPTION("Hardware interface for TUXEDO laptops");
 MODULE_AUTHOR("TUXEDO Computers GmbH <tux@tuxedocomputers.com>");
@@ -958,12 +958,12 @@ static struct file_operations fops_dev = {
 //	.release            = fop_release
 };
 
-struct class *tuxedo_io_device_class;
-dev_t tuxedo_io_device_handle;
+struct class *lwl_io_device_class;
+dev_t lwl_io_device_handle;
 
-static struct cdev tuxedo_io_cdev;
+static struct cdev lwl_io_cdev;
 
-static int __init tuxedo_io_init(void)
+static int __init lwl_io_init(void)
 {
 	int err;
 
@@ -979,38 +979,38 @@ static int __init tuxedo_io_init(void)
 	}
 #endif
 
-	err = alloc_chrdev_region(&tuxedo_io_device_handle, 0, 1, "tuxedo_io_cdev");
+	err = alloc_chrdev_region(&lwl_io_device_handle, 0, 1, "lwl_io_cdev");
 	if (err != 0) {
 		pr_err("Failed to allocate chrdev region\n");
 		return err;
 	}
-	cdev_init(&tuxedo_io_cdev, &fops_dev);
-	err = (cdev_add(&tuxedo_io_cdev, tuxedo_io_device_handle, 1));
+	cdev_init(&lwl_io_cdev, &fops_dev);
+	err = (cdev_add(&lwl_io_cdev, lwl_io_device_handle, 1));
 	if (err < 0) {
 		pr_err("Failed to add cdev\n");
-		unregister_chrdev_region(tuxedo_io_device_handle, 1);
+		unregister_chrdev_region(lwl_io_device_handle, 1);
 	}
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(6, 4, 0)
-	tuxedo_io_device_class = class_create(THIS_MODULE, "tuxedo_io");
+	lwl_io_device_class = class_create(THIS_MODULE, "lwl_io");
 #else
-	tuxedo_io_device_class = class_create("tuxedo_io");
+	lwl_io_device_class = class_create("lwl_io");
 #endif
 
-	device_create(tuxedo_io_device_class, NULL, tuxedo_io_device_handle, NULL, "tuxedo_io");
+	device_create(lwl_io_device_class, NULL, lwl_io_device_handle, NULL, "lwl_io");
 	pr_debug("Module init successful\n");
 	
 	return 0;
 }
 
-static void __exit tuxedo_io_exit(void)
+static void __exit lwl_io_exit(void)
 {
-	device_destroy(tuxedo_io_device_class, tuxedo_io_device_handle);
-	class_destroy(tuxedo_io_device_class);
-	cdev_del(&tuxedo_io_cdev);
-	unregister_chrdev_region(tuxedo_io_device_handle, 1);
+	device_destroy(lwl_io_device_class, lwl_io_device_handle);
+	class_destroy(lwl_io_device_class);
+	cdev_del(&lwl_io_cdev);
+	unregister_chrdev_region(lwl_io_device_handle, 1);
 	pr_debug("Module exit\n");
 }
 
-module_init(tuxedo_io_init);
-module_exit(tuxedo_io_exit);
+module_init(lwl_io_init);
+module_exit(lwl_io_exit);

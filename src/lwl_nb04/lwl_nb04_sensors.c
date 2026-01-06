@@ -22,7 +22,7 @@
 #include <linux/module.h>
 #include <linux/hwmon.h>
 #include <linux/platform_device.h>
-#include "tuxedo_nb04_wmi_bs.h"
+#include "lwl_nb04_wmi_bs.h"
 
 static int read_cpu_info(u8 *cpu_temp, u8 *cpu_turbo_mode)
 {
@@ -120,14 +120,14 @@ struct driver_data_t {
 struct driver_data_t driver_data;
 
 static umode_t
-tuxedo_nb04_sensors_is_visible(const void *drvdata, enum hwmon_sensor_types type,
+lwl_nb04_sensors_is_visible(const void *drvdata, enum hwmon_sensor_types type,
 			       u32 attr, int channel)
 {
 	return 0444;
 }
 
 static int
-tuxedo_nb04_sensors_read(struct device *dev, enum hwmon_sensor_types type,
+lwl_nb04_sensors_read(struct device *dev, enum hwmon_sensor_types type,
 			 u32 attr, int channel, long *val)
 {
 	int err;
@@ -197,7 +197,7 @@ tuxedo_nb04_sensors_read(struct device *dev, enum hwmon_sensor_types type,
 }
 
 static int
-tuxedo_nb04_sensors_read_string(struct device *dev, enum hwmon_sensor_types type,
+lwl_nb04_sensors_read_string(struct device *dev, enum hwmon_sensor_types type,
 				u32 attr, int channel, const char **str)
 {
 	switch (type) {
@@ -214,13 +214,13 @@ tuxedo_nb04_sensors_read_string(struct device *dev, enum hwmon_sensor_types type
 	return -EOPNOTSUPP;
 }
 
-static const struct hwmon_ops tuxedo_nb04_sensors_ops = {
-	.is_visible = tuxedo_nb04_sensors_is_visible,
-	.read = tuxedo_nb04_sensors_read,
-	.read_string = tuxedo_nb04_sensors_read_string
+static const struct hwmon_ops lwl_nb04_sensors_ops = {
+	.is_visible = lwl_nb04_sensors_is_visible,
+	.read = lwl_nb04_sensors_read,
+	.read_string = lwl_nb04_sensors_read_string
 };
 
-static const struct hwmon_channel_info *const tuxedo_nb04_sensors_info[] = {
+static const struct hwmon_channel_info *const lwl_nb04_sensors_info[] = {
 	HWMON_CHANNEL_INFO(temp,
 			   HWMON_T_INPUT | HWMON_T_LABEL,
 			   HWMON_T_INPUT | HWMON_T_LABEL),
@@ -230,12 +230,12 @@ static const struct hwmon_channel_info *const tuxedo_nb04_sensors_info[] = {
 	NULL
 };
 
-static const struct hwmon_chip_info tuxedo_nb04_sensors_chip_info = {
-	.ops = &tuxedo_nb04_sensors_ops,
-	.info = tuxedo_nb04_sensors_info
+static const struct hwmon_chip_info lwl_nb04_sensors_chip_info = {
+	.ops = &lwl_nb04_sensors_ops,
+	.info = lwl_nb04_sensors_info
 };
 
-static int __init tuxedo_nb04_sensors_probe(struct platform_device *pdev)
+static int __init lwl_nb04_sensors_probe(struct platform_device *pdev)
 {
 	struct device *hwmon_dev;
 	int err;
@@ -253,37 +253,37 @@ static int __init tuxedo_nb04_sensors_probe(struct platform_device *pdev)
 	hwmon_dev = devm_hwmon_device_register_with_info(&pdev->dev,
 							 "tuxedo",
 							 &driver_data,
-							 &tuxedo_nb04_sensors_chip_info,
+							 &lwl_nb04_sensors_chip_info,
 							 NULL);
 
 	return PTR_ERR_OR_ZERO(hwmon_dev);
 }
 
-static struct platform_device *tuxedo_nb04_sensors_device;
-static struct platform_driver tuxedo_nb04_sensors_driver = {
-	.driver.name = "tuxedo_nb04_sensors",
+static struct platform_device *lwl_nb04_sensors_device;
+static struct platform_driver lwl_nb04_sensors_driver = {
+	.driver.name = "lwl_nb04_sensors",
 };
 
-static int __init tuxedo_nb04_sensors_init(void)
+static int __init lwl_nb04_sensors_init(void)
 {
-	tuxedo_nb04_sensors_device =
-		platform_create_bundle(&tuxedo_nb04_sensors_driver,
-				       tuxedo_nb04_sensors_probe, NULL, 0, NULL, 0);
+	lwl_nb04_sensors_device =
+		platform_create_bundle(&lwl_nb04_sensors_driver,
+				       lwl_nb04_sensors_probe, NULL, 0, NULL, 0);
 
-	if (IS_ERR(tuxedo_nb04_sensors_device))
-		return PTR_ERR(tuxedo_nb04_sensors_device);
+	if (IS_ERR(lwl_nb04_sensors_device))
+		return PTR_ERR(lwl_nb04_sensors_device);
 
 	return 0;
 }
 
-static void __exit tuxedo_nb04_sensors_exit(void)
+static void __exit lwl_nb04_sensors_exit(void)
 {
-	platform_device_unregister(tuxedo_nb04_sensors_device);
-	platform_driver_unregister(&tuxedo_nb04_sensors_driver);
+	platform_device_unregister(lwl_nb04_sensors_device);
+	platform_driver_unregister(&lwl_nb04_sensors_driver);
 }
 
-module_init(tuxedo_nb04_sensors_init);
-module_exit(tuxedo_nb04_sensors_exit);
+module_init(lwl_nb04_sensors_init);
+module_exit(lwl_nb04_sensors_exit);
 
 MODULE_AUTHOR("TUXEDO Computers GmbH <tux@tuxedocomputers.com>");
 MODULE_DESCRIPTION("TUXEDO Computers NB04 sensors driver");

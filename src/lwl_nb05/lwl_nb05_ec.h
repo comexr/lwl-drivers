@@ -18,14 +18,14 @@
  * with this program; if not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef TUXEDO_NB05_EC_H
-#define TUXEDO_NB05_EC_H
+#ifndef lwl_NB05_EC_H
+#define lwl_NB05_EC_H
 
 #define PULSE1403 "TUXEDO Pulse 14 Gen3"
 #define PULSE1404 "TUXEDO Pulse 14 Gen4"
 #define IFLX14I01 "TUXEDO InfinityFlex 14 Gen1"
 
-MODULE_ALIAS("platform:tuxedo_nb05_ec");
+MODULE_ALIAS("platform:lwl_nb05_ec");
 
 struct nb05_ec_data_t {
 	u8 ver_major;

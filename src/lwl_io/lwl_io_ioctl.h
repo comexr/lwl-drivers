@@ -18,8 +18,8 @@
  * with this program; if not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef TUXEDO_IO_IOCTL_H
-#define TUXEDO_IO_IOCTL_H
+#ifndef lwl_IO_IOCTL_H
+#define lwl_IO_IOCTL_H
 
 #define IOCTL_MAGIC 0xEC
 

@@ -25,7 +25,7 @@
 #include <linux/slab.h>
 #include <linux/dmi.h>
 #include <linux/version.h>
-#include "tuxedo_nb05_ec.h"
+#include "lwl_nb05_ec.h"
 
 #define FAN_SET_RPM_MAX 54
 #define FAN_SET_DUTY_MAX 0xb8
@@ -481,7 +481,7 @@ static ssize_t fan2_pwm_enable_store(struct device *dev,
 	return size;
 }
 
-static int __init tuxedo_nb05_fan_control_probe(struct platform_device *pdev)
+static int __init lwl_nb05_fan_control_probe(struct platform_device *pdev)
 {
 	int err;
 
@@ -516,9 +516,9 @@ static int __init tuxedo_nb05_fan_control_probe(struct platform_device *pdev)
 }
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(6, 11, 0)
-static int tuxedo_nb05_fan_control_remove(struct platform_device *pdev)
+static int lwl_nb05_fan_control_remove(struct platform_device *pdev)
 #else
-static void tuxedo_nb05_fan_control_remove(struct platform_device *pdev)
+static void lwl_nb05_fan_control_remove(struct platform_device *pdev)
 #endif
 {
 	pr_debug("driver remove\n");
@@ -529,32 +529,32 @@ static void tuxedo_nb05_fan_control_remove(struct platform_device *pdev)
 #endif
 }
 
-static struct platform_device *tuxedo_nb05_fan_control_device;
-static struct platform_driver tuxedo_nb05_fan_control_driver = {
-	.driver.name = "tuxedo_fan_control",
-	.remove = tuxedo_nb05_fan_control_remove,
+static struct platform_device *lwl_nb05_fan_control_device;
+static struct platform_driver lwl_nb05_fan_control_driver = {
+	.driver.name = "lwl_fan_control",
+	.remove = lwl_nb05_fan_control_remove,
 };
 
-static int __init tuxedo_nb05_fan_control_init(void)
+static int __init lwl_nb05_fan_control_init(void)
 {
-	tuxedo_nb05_fan_control_device =
-		platform_create_bundle(&tuxedo_nb05_fan_control_driver,
-				       tuxedo_nb05_fan_control_probe, NULL, 0, NULL, 0);
+	lwl_nb05_fan_control_device =
+		platform_create_bundle(&lwl_nb05_fan_control_driver,
+				       lwl_nb05_fan_control_probe, NULL, 0, NULL, 0);
 
-	if (IS_ERR(tuxedo_nb05_fan_control_device))
-		return PTR_ERR(tuxedo_nb05_fan_control_device);
+	if (IS_ERR(lwl_nb05_fan_control_device))
+		return PTR_ERR(lwl_nb05_fan_control_device);
 
 	return 0;
 }
 
-static void __exit tuxedo_nb05_fan_control_exit(void)
+static void __exit lwl_nb05_fan_control_exit(void)
 {
-	platform_device_unregister(tuxedo_nb05_fan_control_device);
-	platform_driver_unregister(&tuxedo_nb05_fan_control_driver);
+	platform_device_unregister(lwl_nb05_fan_control_device);
+	platform_driver_unregister(&lwl_nb05_fan_control_driver);
 }
 
-module_init(tuxedo_nb05_fan_control_init);
-module_exit(tuxedo_nb05_fan_control_exit);
+module_init(lwl_nb05_fan_control_init);
+module_exit(lwl_nb05_fan_control_exit);
 
 MODULE_AUTHOR("TUXEDO Computers GmbH <tux@tuxedocomputers.com>");
 MODULE_DESCRIPTION("TUXEDO Computers NB05 fan control");

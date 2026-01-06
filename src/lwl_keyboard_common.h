@@ -18,8 +18,8 @@
  * with this program; if not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef TUXEDO_KEYBOARD_COMMON_H
-#define TUXEDO_KEYBOARD_COMMON_H
+#ifndef lwl_KEYBOARD_COMMON_H
+#define lwl_KEYBOARD_COMMON_H
 
 #include <linux/module.h>
 #include <linux/kernel.h>
@@ -30,16 +30,16 @@
 #include <linux/input/sparse-keymap.h>
 
 /* ::::  Module specific Constants and simple Macros   :::: */
-#define __TUXEDO_PR(lvl, fmt, ...) do { pr_##lvl(fmt, ##__VA_ARGS__); } while (0)
-#define TUXEDO_INFO(fmt, ...) __TUXEDO_PR(info, fmt, ##__VA_ARGS__)
-#define TUXEDO_ERROR(fmt, ...) __TUXEDO_PR(err, fmt, ##__VA_ARGS__)
-#define TUXEDO_DEBUG(fmt, ...) __TUXEDO_PR(debug, "[%s:%u] " fmt, __func__, __LINE__, ##__VA_ARGS__)
+#define __lwl_PR(lvl, fmt, ...) do { pr_##lvl(fmt, ##__VA_ARGS__); } while (0)
+#define lwl_INFO(fmt, ...) __lwl_PR(info, fmt, ##__VA_ARGS__)
+#define lwl_ERROR(fmt, ...) __lwl_PR(err, fmt, ##__VA_ARGS__)
+#define lwl_DEBUG(fmt, ...) __lwl_PR(debug, "[%s:%u] " fmt, __func__, __LINE__, ##__VA_ARGS__)
 
 #ifndef DRIVER_NAME
-#define DRIVER_NAME "tuxedo_keyboard"
+#define DRIVER_NAME "lwl_keyboard"
 #endif
 
-struct tuxedo_keyboard_driver {
+struct lwl_keyboard_driver {
 	// Platform driver provided by driver
 	struct platform_driver *platform_driver;
 	// Probe method provided by driver
@@ -57,14 +57,14 @@ struct tuxedo_keyboard_driver {
 };
 
 // Global module devices
-static struct platform_device *tuxedo_platform_device = NULL;
-static struct input_dev *tuxedo_input_device = NULL;
+static struct platform_device *lwl_platform_device = NULL;
+static struct input_dev *lwl_input_device = NULL;
 
 // Currently chosen driver
-static struct tuxedo_keyboard_driver *current_driver = NULL;
+static struct lwl_keyboard_driver *current_driver = NULL;
 
-struct platform_device *tuxedo_keyboard_init_driver(struct tuxedo_keyboard_driver *tk_driver);
-void tuxedo_keyboard_remove_driver(struct tuxedo_keyboard_driver *tk_driver);
+struct platform_device *lwl_keyboard_init_driver(struct lwl_keyboard_driver *tk_driver);
+void lwl_keyboard_remove_driver(struct lwl_keyboard_driver *tk_driver);
 
 /**
  * Basically a copy of the existing report event but doesn't report unknown events

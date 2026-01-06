@@ -29,8 +29,8 @@
 #include <linux/delay.h>
 #include <linux/platform_device.h>
 #include <linux/timer.h>
-#include "tuxedo_nb05_power_profiles.h"
-#include "../tuxedo_compatibility_check/tuxedo_compatibility_check.h"
+#include "lwl_nb05_power_profiles.h"
+#include "../lwl_compatibility_check/lwl_compatibility_check.h"
 
 #define dev_to_wdev(__dev)	container_of(__dev, struct wmi_device, dev)
 
@@ -297,9 +297,9 @@ static ssize_t platform_profile_store(struct device *dev,
 }
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(5, 3, 0)
-static int tuxedo_nb05_power_profiles_probe(struct wmi_device *wdev)
+static int lwl_nb05_power_profiles_probe(struct wmi_device *wdev)
 #else
-static int tuxedo_nb05_power_profiles_probe(struct wmi_device *wdev, const void *dummy_context)
+static int lwl_nb05_power_profiles_probe(struct wmi_device *wdev, const void *dummy_context)
 #endif
 {
 	int err;
@@ -309,7 +309,7 @@ static int tuxedo_nb05_power_profiles_probe(struct wmi_device *wdev, const void 
 
 	__wmi_dev = wdev;
 
-	if (!tuxedo_is_compatible())
+	if (!lwl_is_compatible())
 		return -ENODEV;
 
 	if (!wmi_has_guid(NB05_WMI_METHOD_BA_GUID))
@@ -329,7 +329,7 @@ static int tuxedo_nb05_power_profiles_probe(struct wmi_device *wdev, const void 
 	}
 
 	const struct platform_device_info pinfo = {
-		.name = "tuxedo_platform_profile",
+		.name = "lwl_platform_profile",
 		.id = PLATFORM_DEVID_NONE,
 		.parent = &wdev->dev
 	};
@@ -351,9 +351,9 @@ static int tuxedo_nb05_power_profiles_probe(struct wmi_device *wdev, const void 
 }
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(5, 13, 0)
-static int tuxedo_nb05_power_profiles_remove(struct wmi_device *wdev)
+static int lwl_nb05_power_profiles_remove(struct wmi_device *wdev)
 #else
-static void tuxedo_nb05_power_profiles_remove(struct wmi_device *wdev)
+static void lwl_nb05_power_profiles_remove(struct wmi_device *wdev)
 #endif
 {
 	pr_debug("driver remove\n");
@@ -367,26 +367,26 @@ static void tuxedo_nb05_power_profiles_remove(struct wmi_device *wdev)
 #endif
 }
 
-static const struct wmi_device_id tuxedo_nb05_power_profiles_device_ids[] = {
+static const struct wmi_device_id lwl_nb05_power_profiles_device_ids[] = {
 	{ .guid_string = NB05_WMI_METHOD_BA_GUID },
 	{ }
 };
 
-static struct wmi_driver tuxedo_nb05_power_profiles_driver = {
+static struct wmi_driver lwl_nb05_power_profiles_driver = {
 	.driver = {
-		.name = "tuxedo_nb05_power_profiles",
+		.name = "lwl_nb05_power_profiles",
 		.owner = THIS_MODULE
 	},
-	.id_table = tuxedo_nb05_power_profiles_device_ids,
-	.probe = tuxedo_nb05_power_profiles_probe,
-	.remove = tuxedo_nb05_power_profiles_remove,
+	.id_table = lwl_nb05_power_profiles_device_ids,
+	.probe = lwl_nb05_power_profiles_probe,
+	.remove = lwl_nb05_power_profiles_remove,
 };
 
-module_wmi_driver(tuxedo_nb05_power_profiles_driver);
+module_wmi_driver(lwl_nb05_power_profiles_driver);
 
 MODULE_AUTHOR("TUXEDO Computers GmbH <tux@tuxedocomputers.com>");
 MODULE_DESCRIPTION("Driver for NB05 power profiles");
 MODULE_LICENSE("GPL");
 
-MODULE_DEVICE_TABLE(wmi, tuxedo_nb05_power_profiles_device_ids);
+MODULE_DEVICE_TABLE(wmi, lwl_nb05_power_profiles_device_ids);
 MODULE_ALIAS("wmi:" NB05_WMI_METHOD_BA_GUID);

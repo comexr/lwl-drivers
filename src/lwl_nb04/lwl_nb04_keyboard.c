@@ -27,7 +27,7 @@
 #include <linux/input/sparse-keymap.h>
 #include <linux/version.h>
 #include <linux/delay.h>
-#include "../tuxedo_compatibility_check/tuxedo_compatibility_check.h"
+#include "../lwl_compatibility_check/lwl_compatibility_check.h"
 
 #define NB04_WMI_EVENT_GUID	"96A786FA-690C-48FB-9EB3-FA9BC3D92300"
 
@@ -122,9 +122,9 @@ err_free_input_device:
 }
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(5, 3, 0)
-static int tuxedo_nb04_keyboard_probe(struct wmi_device *wdev)
+static int lwl_nb04_keyboard_probe(struct wmi_device *wdev)
 #else
-static int tuxedo_nb04_keyboard_probe(struct wmi_device *wdev, const void *dummy_context)
+static int lwl_nb04_keyboard_probe(struct wmi_device *wdev, const void *dummy_context)
 #endif
 {
 	struct driver_data_t *driver_data;
@@ -132,7 +132,7 @@ static int tuxedo_nb04_keyboard_probe(struct wmi_device *wdev, const void *dummy
 
 	pr_debug("driver probe\n");
 
-	if (!tuxedo_is_compatible())
+	if (!lwl_is_compatible())
 		return -ENODEV;
 
 	if (!wmi_has_guid(NB04_WMI_EVENT_GUID))
@@ -152,9 +152,9 @@ static int tuxedo_nb04_keyboard_probe(struct wmi_device *wdev, const void *dummy
 }
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(5, 13, 0)
-static int tuxedo_nb04_keyboard_remove(struct wmi_device *wdev)
+static int lwl_nb04_keyboard_remove(struct wmi_device *wdev)
 #else
-static void tuxedo_nb04_keyboard_remove(struct wmi_device *wdev)
+static void lwl_nb04_keyboard_remove(struct wmi_device *wdev)
 #endif
 {
 	pr_debug("driver remove\n");
@@ -166,7 +166,7 @@ static void tuxedo_nb04_keyboard_remove(struct wmi_device *wdev)
 #endif
 }
 
-static void tuxedo_nb04_keyboard_notify(struct wmi_device *wdev, union acpi_object *obj)
+static void lwl_nb04_keyboard_notify(struct wmi_device *wdev, union acpi_object *obj)
 {
 	u8 function_number;
 	u8 event_code;
@@ -189,27 +189,27 @@ static void tuxedo_nb04_keyboard_notify(struct wmi_device *wdev, union acpi_obje
 	}
 }
 
-static const struct wmi_device_id tuxedo_nb04_keyboard_device_ids[] = {
+static const struct wmi_device_id lwl_nb04_keyboard_device_ids[] = {
 	{ .guid_string = NB04_WMI_EVENT_GUID },
 	{ }
 };
 
-static struct wmi_driver tuxedo_nb04_keyboard_driver = {
+static struct wmi_driver lwl_nb04_keyboard_driver = {
 	.driver = {
-		.name = "tuxedo_nb04_keyboard",
+		.name = "lwl_nb04_keyboard",
 		.owner = THIS_MODULE
 	},
-	.id_table = tuxedo_nb04_keyboard_device_ids,
-	.probe = tuxedo_nb04_keyboard_probe,
-	.remove = tuxedo_nb04_keyboard_remove,
-	.notify = tuxedo_nb04_keyboard_notify,
+	.id_table = lwl_nb04_keyboard_device_ids,
+	.probe = lwl_nb04_keyboard_probe,
+	.remove = lwl_nb04_keyboard_remove,
+	.notify = lwl_nb04_keyboard_notify,
 };
 
-module_wmi_driver(tuxedo_nb04_keyboard_driver);
+module_wmi_driver(lwl_nb04_keyboard_driver);
 
 MODULE_AUTHOR("TUXEDO Computers GmbH <tux@tuxedocomputers.com>");
 MODULE_DESCRIPTION("Driver for NB04 WMI (keyboard) events");
 MODULE_LICENSE("GPL");
 
-MODULE_DEVICE_TABLE(wmi, tuxedo_nb04_keyboard_device_ids);
+MODULE_DEVICE_TABLE(wmi, lwl_nb04_keyboard_device_ids);
 MODULE_ALIAS("wmi:" NB04_WMI_EVENT_GUID);

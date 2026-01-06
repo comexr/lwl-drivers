@@ -18,11 +18,11 @@
  * with this program; if not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef TUXEDO_COMPATIBILITY_CHECK_H
-#define TUXEDO_COMPATIBILITY_CHECK_H
+#ifndef lwl_COMPATIBILITY_CHECK_H
+#define lwl_COMPATIBILITY_CHECK_H
 
 #include <linux/kernel.h>
 
-bool tuxedo_is_compatible(void);
+bool lwl_is_compatible(void);
 
-#endif // TUXEDO_COMPATIBILITY_CHECK_H
+#endif // lwl_COMPATIBILITY_CHECK_H

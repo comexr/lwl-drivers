@@ -18,8 +18,8 @@
  * with this program; if not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef TUXEDO_NB05_KBD_BACKLIGHT_H
-#define TUXEDO_NB05_KBD_BACKLIGHT_H
+#ifndef lwl_NB05_KBD_BACKLIGHT_H
+#define lwl_NB05_KBD_BACKLIGHT_H
 #include <linux/types.h>
 void nb05_leds_notify_brightness_change_extern(u8);
 #endif

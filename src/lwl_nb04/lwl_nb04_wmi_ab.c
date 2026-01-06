@@ -24,8 +24,8 @@
 #include <linux/wmi.h>
 #include <linux/version.h>
 #include <linux/delay.h>
-#include "tuxedo_nb04_wmi_ab.h"
-#include "../tuxedo_compatibility_check/tuxedo_compatibility_check.h"
+#include "lwl_nb04_wmi_ab.h"
+#include "../lwl_compatibility_check/lwl_compatibility_check.h"
 
 #define dev_to_wdev(__dev)	container_of(__dev, struct wmi_device, dev)
 
@@ -328,16 +328,16 @@ int wmi_set_whole_keyboard(u8 red, u8 green, u8 blue, int brightness)
 EXPORT_SYMBOL(wmi_set_whole_keyboard);
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(5, 3, 0)
-static int tuxedo_nb04_wmi_ab_probe(struct wmi_device *wdev)
+static int lwl_nb04_wmi_ab_probe(struct wmi_device *wdev)
 #else
-static int tuxedo_nb04_wmi_ab_probe(struct wmi_device *wdev, const void *dummy_context)
+static int lwl_nb04_wmi_ab_probe(struct wmi_device *wdev, const void *dummy_context)
 #endif
 {
 	struct driver_data_t *driver_data;
 
 	pr_debug("driver probe\n");
 
-	if (!tuxedo_is_compatible())
+	if (!lwl_is_compatible())
 		return -ENODEV;
 
 	if (!wmi_has_guid(NB04_WMI_AB_GUID))
@@ -355,9 +355,9 @@ static int tuxedo_nb04_wmi_ab_probe(struct wmi_device *wdev, const void *dummy_c
 }
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(5, 13, 0)
-static int tuxedo_nb04_wmi_ab_remove(struct wmi_device *wdev)
+static int lwl_nb04_wmi_ab_remove(struct wmi_device *wdev)
 #else
-static void tuxedo_nb04_wmi_ab_remove(struct wmi_device *wdev)
+static void lwl_nb04_wmi_ab_remove(struct wmi_device *wdev)
 #endif
 {
 	__wmi_dev = NULL;
@@ -368,26 +368,26 @@ static void tuxedo_nb04_wmi_ab_remove(struct wmi_device *wdev)
 #endif
 }
 
-static const struct wmi_device_id tuxedo_nb04_wmi_ab_device_ids[] = {
+static const struct wmi_device_id lwl_nb04_wmi_ab_device_ids[] = {
 	{ .guid_string = NB04_WMI_AB_GUID },
 	{ }
 };
 
-static struct wmi_driver tuxedo_nb04_wmi_ab_driver = {
+static struct wmi_driver lwl_nb04_wmi_ab_driver = {
 	.driver = {
-		.name = "tuxedo_nb04_wmi_ab",
+		.name = "lwl_nb04_wmi_ab",
 		.owner = THIS_MODULE
 	},
-	.id_table = tuxedo_nb04_wmi_ab_device_ids,
-	.probe = tuxedo_nb04_wmi_ab_probe,
-	.remove = tuxedo_nb04_wmi_ab_remove,
+	.id_table = lwl_nb04_wmi_ab_device_ids,
+	.probe = lwl_nb04_wmi_ab_probe,
+	.remove = lwl_nb04_wmi_ab_remove,
 };
 
-module_wmi_driver(tuxedo_nb04_wmi_ab_driver);
+module_wmi_driver(lwl_nb04_wmi_ab_driver);
 
 MODULE_AUTHOR("TUXEDO Computers GmbH <tux@tuxedocomputers.com>");
 MODULE_DESCRIPTION("Driver for NB04 WMI AB methods");
 MODULE_LICENSE("GPL");
 
-MODULE_DEVICE_TABLE(wmi, tuxedo_nb04_wmi_ab_device_ids);
+MODULE_DEVICE_TABLE(wmi, lwl_nb04_wmi_ab_device_ids);
 MODULE_ALIAS("wmi:" NB04_WMI_AB_GUID);

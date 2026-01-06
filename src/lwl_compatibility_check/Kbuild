@@ -1,1 +1,1 @@
-obj-m += tuxedo_compatibility_check.o
+obj-m += lwl_compatibility_check.o

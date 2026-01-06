@@ -294,7 +294,7 @@ static int __init init_sysfs_attrs(struct platform_device *pdev)
 
 static int interface_probe_retries = 5;
 
-static int __init tuxedo_nb02_nvidia_power_ctrl_probe(struct platform_device *pdev) {
+static int __init lwl_nb02_nvidia_power_ctrl_probe(struct platform_device *pdev) {
 	int result = 0;
 	char **uniwill_active_interface = NULL;
 	struct pci_dev *gpu_dev = NULL;
@@ -336,17 +336,17 @@ static int __init tuxedo_nb02_nvidia_power_ctrl_probe(struct platform_device *pd
 
 // Boilerplate
 
-static struct platform_device *tuxedo_nb02_nvidia_power_ctrl_device;
-static struct platform_driver tuxedo_nb02_nvidia_power_ctrl_driver = {
-	.driver.name = "tuxedo_nvidia_power_ctrl",
+static struct platform_device *lwl_nb02_nvidia_power_ctrl_device;
+static struct platform_driver lwl_nb02_nvidia_power_ctrl_driver = {
+	.driver.name = "lwl_nvidia_power_ctrl",
 };
 
-static int __init tuxedo_nb02_nvidia_power_ctrl_init(void)
+static int __init lwl_nb02_nvidia_power_ctrl_init(void)
 {
 	struct device *dev = NULL;
 
 	dev = bus_find_device_by_name(&platform_bus_type, NULL,
-				      tuxedo_nb02_nvidia_power_ctrl_driver.driver.name);
+				      lwl_nb02_nvidia_power_ctrl_driver.driver.name);
 	if (IS_ERR(dev))
 		return PTR_ERR(dev);
 	if (dev != NULL) {
@@ -354,26 +354,26 @@ static int __init tuxedo_nb02_nvidia_power_ctrl_init(void)
 		return -EEXIST;
 	}
 
-	tuxedo_nb02_nvidia_power_ctrl_device =
-		platform_create_bundle(&tuxedo_nb02_nvidia_power_ctrl_driver,
-				       tuxedo_nb02_nvidia_power_ctrl_probe, NULL, 0, NULL, 0);
+	lwl_nb02_nvidia_power_ctrl_device =
+		platform_create_bundle(&lwl_nb02_nvidia_power_ctrl_driver,
+				       lwl_nb02_nvidia_power_ctrl_probe, NULL, 0, NULL, 0);
 
-	if (IS_ERR(tuxedo_nb02_nvidia_power_ctrl_device))
-		return PTR_ERR(tuxedo_nb02_nvidia_power_ctrl_device);
+	if (IS_ERR(lwl_nb02_nvidia_power_ctrl_device))
+		return PTR_ERR(lwl_nb02_nvidia_power_ctrl_device);
 
 	return 0;
 }
 
-static void __exit tuxedo_nb02_nvidia_power_ctrl_exit(void)
+static void __exit lwl_nb02_nvidia_power_ctrl_exit(void)
 {
-	platform_device_unregister(tuxedo_nb02_nvidia_power_ctrl_device);
-	platform_driver_unregister(&tuxedo_nb02_nvidia_power_ctrl_driver);
+	platform_device_unregister(lwl_nb02_nvidia_power_ctrl_device);
+	platform_driver_unregister(&lwl_nb02_nvidia_power_ctrl_driver);
 }
 
-module_init(tuxedo_nb02_nvidia_power_ctrl_init);
-module_exit(tuxedo_nb02_nvidia_power_ctrl_exit);
+module_init(lwl_nb02_nvidia_power_ctrl_init);
+module_exit(lwl_nb02_nvidia_power_ctrl_exit);
 
 MODULE_AUTHOR("TUXEDO Computers GmbH <tux@tuxedocomputers.com>");
 MODULE_DESCRIPTION("TUXEDO Computers Dynamic Boost and cTGP control driver for NVIDIA silicon for devices marked with board_vendor NB02");
 MODULE_LICENSE("GPL");
-MODULE_ALIAS("platform:tuxedo_keyboard");
+MODULE_ALIAS("platform:lwl_keyboard");

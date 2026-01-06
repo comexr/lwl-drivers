@@ -18,8 +18,8 @@
  * with this program; if not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef TUXEDO_NB05_POWER_PROFILES_H
-#define TUXEDO_NB05_POWER_PROFILES_H
+#ifndef lwl_NB05_POWER_PROFILES_H
+#define lwl_NB05_POWER_PROFILES_H
 void rewrite_last_profile(void);
 bool profile_changed_by_driver(void);
 #endif

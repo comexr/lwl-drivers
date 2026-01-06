@@ -25,7 +25,7 @@
 #include <linux/slab.h>
 #include <linux/dmi.h>
 #include <linux/version.h>
-#include "tuxedo_nb04_wmi_bs.h"
+#include "lwl_nb04_wmi_bs.h"
 
 #define DEFAULT_PROFILE		WMI_SYSTEM_MODE_BEAST
 
@@ -187,7 +187,7 @@ static ssize_t platform_profile_store(struct device *dev,
 	}
 }
 
-static int __init tuxedo_nb04_power_profiles_probe(struct platform_device *pdev)
+static int __init lwl_nb04_power_profiles_probe(struct platform_device *pdev)
 {
 	int err;
 	struct driver_data_t *driver_data = devm_kzalloc(&pdev->dev, sizeof(*driver_data), GFP_KERNEL);
@@ -218,9 +218,9 @@ static int __init tuxedo_nb04_power_profiles_probe(struct platform_device *pdev)
 }
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(6, 11, 0)
-static int tuxedo_nb04_power_profiles_remove(struct platform_device *pdev)
+static int lwl_nb04_power_profiles_remove(struct platform_device *pdev)
 #else
-static void tuxedo_nb04_power_profiles_remove(struct platform_device *pdev)
+static void lwl_nb04_power_profiles_remove(struct platform_device *pdev)
 #endif
 {
 	pr_debug("driver remove\n");
@@ -231,35 +231,35 @@ static void tuxedo_nb04_power_profiles_remove(struct platform_device *pdev)
 #endif
 }
 
-static struct platform_device *tuxedo_nb04_power_profiles_device;
-static struct platform_driver tuxedo_nb04_power_profiles_driver = {
-	.driver.name = "tuxedo_platform_profile",
-	.remove = tuxedo_nb04_power_profiles_remove,
+static struct platform_device *lwl_nb04_power_profiles_device;
+static struct platform_driver lwl_nb04_power_profiles_driver = {
+	.driver.name = "lwl_platform_profile",
+	.remove = lwl_nb04_power_profiles_remove,
 };
 
-static int __init tuxedo_nb04_power_profiles_init(void)
+static int __init lwl_nb04_power_profiles_init(void)
 {
 	if (!nb04_wmi_bs_available())
 		return -ENODEV;
 
-	tuxedo_nb04_power_profiles_device =
-		platform_create_bundle(&tuxedo_nb04_power_profiles_driver,
-				       tuxedo_nb04_power_profiles_probe, NULL, 0, NULL, 0);
+	lwl_nb04_power_profiles_device =
+		platform_create_bundle(&lwl_nb04_power_profiles_driver,
+				       lwl_nb04_power_profiles_probe, NULL, 0, NULL, 0);
 
-	if (IS_ERR(tuxedo_nb04_power_profiles_device))
-		return PTR_ERR(tuxedo_nb04_power_profiles_device);
+	if (IS_ERR(lwl_nb04_power_profiles_device))
+		return PTR_ERR(lwl_nb04_power_profiles_device);
 
 	return 0;
 }
 
-static void __exit tuxedo_nb04_power_profiles_exit(void)
+static void __exit lwl_nb04_power_profiles_exit(void)
 {
-	platform_device_unregister(tuxedo_nb04_power_profiles_device);
-	platform_driver_unregister(&tuxedo_nb04_power_profiles_driver);
+	platform_device_unregister(lwl_nb04_power_profiles_device);
+	platform_driver_unregister(&lwl_nb04_power_profiles_driver);
 }
 
-module_init(tuxedo_nb04_power_profiles_init);
-module_exit(tuxedo_nb04_power_profiles_exit);
+module_init(lwl_nb04_power_profiles_init);
+module_exit(lwl_nb04_power_profiles_exit);
 
 MODULE_AUTHOR("TUXEDO Computers GmbH <tux@tuxedocomputers.com>");
 MODULE_DESCRIPTION("TUXEDO Computers NB04 platform profile driver");

@@ -788,7 +788,7 @@ lwl-keyboard (2.0.2) bionic; urgency=low
 
   * Fix not restoring state on resume
   * Fix module autoload issues
-  * Add standard config tuxedo_keyboard.conf to package
+  * Add standard config lwl_keyboard.conf to package
 
  -- Christoffer Sandberg <tux@tuxedocomputers.com>  Tue, 14 Apr 2020 13:09:00 +0100
 

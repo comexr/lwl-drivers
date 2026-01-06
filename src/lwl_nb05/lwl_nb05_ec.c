@@ -27,8 +27,8 @@
 #include <linux/acpi.h>
 #include <linux/delay.h>
 #include <asm/io.h>
-#include "tuxedo_nb05_ec.h"
-#include "../tuxedo_compatibility_check/tuxedo_compatibility_check.h"
+#include "lwl_nb05_ec.h"
+#include "../lwl_compatibility_check/lwl_compatibility_check.h"
 
 static struct nb05_ec_data_t ec_data;
 
@@ -103,7 +103,7 @@ void nb05_read_ec_fw_version(u8 *major, u8 *minor)
 }
 EXPORT_SYMBOL(nb05_read_ec_fw_version);
 
-static int tuxedo_nb05_ec_probe(struct platform_device *pdev)
+static int lwl_nb05_ec_probe(struct platform_device *pdev)
 {
 	u8 minor, major;
 
@@ -116,14 +116,14 @@ static int tuxedo_nb05_ec_probe(struct platform_device *pdev)
 	return 0;
 }
 
-static struct platform_driver tuxedo_nb05_ec_driver = {
+static struct platform_driver lwl_nb05_ec_driver = {
 	.driver		= {
 		.name	= KBUILD_MODNAME,
 	},
-	.probe		= tuxedo_nb05_ec_probe,
+	.probe		= lwl_nb05_ec_probe,
 };
 
-static struct platform_device *tuxedo_nb05_ec_device;
+static struct platform_device *lwl_nb05_ec_device;
 
 static int dmi_check_callback(const struct dmi_system_id *id)
 {
@@ -142,7 +142,7 @@ struct nb05_device_data_t data_infinityflex = {
 	.fanctl_onereg = true,
 };
 
-static const struct dmi_system_id tuxedo_nb05_id_table[] = {
+static const struct dmi_system_id lwl_nb05_id_table[] = {
 	{
 		.ident = PULSE1403,
 		.matches = {
@@ -176,11 +176,11 @@ static const struct dmi_system_id tuxedo_nb05_id_table[] = {
 	{ },
 };
 
-MODULE_DEVICE_TABLE(dmi, tuxedo_nb05_id_table);
+MODULE_DEVICE_TABLE(dmi, lwl_nb05_id_table);
 
 const struct dmi_system_id *nb05_match_device(void)
 {
-	return dmi_first_match(tuxedo_nb05_id_table);
+	return dmi_first_match(lwl_nb05_id_table);
 }
 EXPORT_SYMBOL(nb05_match_device);
 
@@ -190,30 +190,30 @@ void nb05_get_ec_data(struct nb05_ec_data_t **ec_data_pp)
 }
 EXPORT_SYMBOL(nb05_get_ec_data);
 
-static int __init tuxedo_nb05_ec_init(void)
+static int __init lwl_nb05_ec_init(void)
 {
-	if (!dmi_check_system(tuxedo_nb05_id_table))
+	if (!dmi_check_system(lwl_nb05_id_table))
 		return -ENODEV;
 
-	if (!tuxedo_is_compatible())
+	if (!lwl_is_compatible())
 		return -ENODEV;
 
-	tuxedo_nb05_ec_device =
-		platform_create_bundle(&tuxedo_nb05_ec_driver,
-				       tuxedo_nb05_ec_probe,
+	lwl_nb05_ec_device =
+		platform_create_bundle(&lwl_nb05_ec_driver,
+				       lwl_nb05_ec_probe,
 				       NULL, 0, NULL, 0);
 
-	return PTR_ERR_OR_ZERO(tuxedo_nb05_ec_device);
+	return PTR_ERR_OR_ZERO(lwl_nb05_ec_device);
 }
 
-static void __exit tuxedo_nb05_ec_exit(void)
+static void __exit lwl_nb05_ec_exit(void)
 {
-	platform_device_unregister(tuxedo_nb05_ec_device);
-	platform_driver_unregister(&tuxedo_nb05_ec_driver);
+	platform_device_unregister(lwl_nb05_ec_device);
+	platform_driver_unregister(&lwl_nb05_ec_driver);
 }
 
-module_init(tuxedo_nb05_ec_init);
-module_exit(tuxedo_nb05_ec_exit);
+module_init(lwl_nb05_ec_init);
+module_exit(lwl_nb05_ec_exit);
 
 MODULE_AUTHOR("TUXEDO Computers GmbH <tux@tuxedocomputers.com>");
 MODULE_DESCRIPTION("Driver for NB05 EC I/O");

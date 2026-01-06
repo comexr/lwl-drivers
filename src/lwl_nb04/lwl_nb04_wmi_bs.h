@@ -18,8 +18,8 @@
  * with this program; if not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef TUXEDO_NB04_WMI_BS_H
-#define TUXEDO_NB04_WMI_BS_H
+#ifndef lwl_NB04_WMI_BS_H
+#define lwl_NB04_WMI_BS_H
 
 #define NB04_WMI_BS_GUID	"1F174999-3A4E-4311-900D-7BE7166D5055"
 MODULE_ALIAS("wmi:" NB04_WMI_BS_GUID);
