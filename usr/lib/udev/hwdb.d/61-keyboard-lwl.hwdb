@@ -1,0 +1,11 @@
+###########################################################
+# lwl Computers
+###########################################################
+
+# lwl Computers notebooks with board_vendor NB02
+evdev:atkbd:dmi:*:svnlwl:*:rvnNB02:*
+ KEYBOARD_KEY_f8=fn
+
+# lwl InfinityFlex 14 Gen1
+evdev:atkbd:dmi:*:svnlwl:*:rnDN50Z-140HC-YD:*
+ KEYBOARD_KEY_6e=fn

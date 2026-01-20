@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-2.0+
 /*!
- * Copyright (c) 2021 TUXEDO Computers GmbH <tux@tuxedocomputers.com>
+ * Copyright (c) 2021 lwl Computers GmbH <tux@lwlcomputers.com>
  *
- * This file is part of tuxedo-drivers.
+ * This file is part of lwl-drivers.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -402,7 +402,7 @@ static struct wmi_driver uniwill_wmi_driver = {
 
 module_wmi_driver(uniwill_wmi_driver);
 
-MODULE_AUTHOR("TUXEDO Computers GmbH <tux@tuxedocomputers.com>");
+MODULE_AUTHOR("lwl Computers GmbH <tux@lwlcomputers.com>");
 MODULE_DESCRIPTION("Driver for Uniwill WMI interface");
 MODULE_LICENSE("GPL");
 

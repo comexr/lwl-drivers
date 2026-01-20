@@ -1,8 +1,8 @@
 /* SPDX-License-Identifier: GPL-2.0+ */
 /*!
- * Copyright (c) 2020-2024 TUXEDO Computers GmbH <tux@tuxedocomputers.com>
+ * Copyright (c) 2020-2024 lwl Computers GmbH <tux@lwlcomputers.com>
  *
- * This file is part of tuxedo-drivers.
+ * This file is part of lwl-drivers.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #ifndef UNIWILL_KEYBOARD_H
 #define UNIWILL_KEYBOARD_H
 
-#include "tuxedo_keyboard_common.h"
+#include "lwl_keyboard_common.h"
 #include <linux/acpi.h>
 #include <linux/wmi.h>
 #include <linux/workqueue.h>
@@ -61,7 +61,7 @@ static void uw_charging_priority_write_state(void);
 static void uw_charging_profile_write_state(void);
 static void uniwill_set_custom_profile_mode(bool zero_bit_initially);
 
-struct tuxedo_keyboard_driver uniwill_keyboard_driver;
+struct lwl_keyboard_driver uniwill_keyboard_driver;
 
 struct uniwill_device_features_t uniwill_device_features;
 
@@ -197,7 +197,7 @@ int uniwill_add_interface(struct uniwill_interface_t *interface)
 	if (strcmp(interface->string_id, UNIWILL_INTERFACE_WMI_STRID) == 0)
 		uniwill_interfaces.wmi = interface;
 	else {
-		TUXEDO_DEBUG("trying to add unknown interface\n");
+		lwl_DEBUG("trying to add unknown interface\n");
 		mutex_unlock(&uniwill_interface_modification_lock);
 		return -EINVAL;
 	}
@@ -206,7 +206,7 @@ int uniwill_add_interface(struct uniwill_interface_t *interface)
 	mutex_unlock(&uniwill_interface_modification_lock);
 
 	// Initialize driver if not already present
-	tuxedo_keyboard_init_driver(&uniwill_keyboard_driver);
+	lwl_keyboard_init_driver(&uniwill_keyboard_driver);
 
 	return 0;
 }
@@ -218,7 +218,7 @@ int uniwill_remove_interface(struct uniwill_interface_t *interface)
 
 	if (strcmp(interface->string_id, UNIWILL_INTERFACE_WMI_STRID) == 0) {
 		// Remove driver if last interface is removed
-		tuxedo_keyboard_remove_driver(&uniwill_keyboard_driver);
+		lwl_keyboard_remove_driver(&uniwill_keyboard_driver);
 
 		uniwill_interfaces.wmi = NULL;
 	} else {
@@ -308,7 +308,7 @@ void uniwill_event_callb(u32 code)
 		default:
 			if (uniwill_keyboard_driver.input_device != NULL)
 				if (!sparse_keymap_report_known_event(uniwill_keyboard_driver.input_device, code, 1, true))
-					TUXEDO_DEBUG("Unknown code - %d (%0#6x)\n", code, code);
+					lwl_DEBUG("Unknown code - %d (%0#6x)\n", code, code);
 	}
 }
 
@@ -479,7 +479,7 @@ static int uw_lightbar_init(struct platform_device *dev)
 		;
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(4, 18, 0)
-	TUXEDO_ERROR(
+	lwl_ERROR(
 		"Warning: Kernel version less that 4.18, lightbar might not be properly recognized.");
 #endif
 
@@ -1689,7 +1689,7 @@ static int uniwill_keyboard_probe(struct platform_device *dev)
 	uw_feats = uniwill_get_device_features();
 
 	// FIXME Hard set balanced profile until we have implemented a way to
-	// switch it while tuxedo_io is loaded
+	// switch it while lwl_io is loaded
 	// uw_ec_write_addr(0x51, 0x07, 0x00, 0x00, &reg_write_return);
 	uniwill_write_ec_ram(0x0751, 0x00);
 
@@ -1713,7 +1713,7 @@ static int uniwill_keyboard_probe(struct platform_device *dev)
 	uniwill_write_ec_ram(0x044f, 0x00);
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(5, 9, 0)
-	TUXEDO_ERROR("Warning: Kernel version less that 5.9, keyboard backlight might not be properly recognized.");
+	lwl_ERROR("Warning: Kernel version less that 5.9, keyboard backlight might not be properly recognized.");
 #endif
 	uniwill_read_ec_ram(UW_EC_REG_KBD_BL_STATUS, &data);
 	uniwill_kbd_bl_enable_state_on_start = (data >> 1) & 0x01;
@@ -1817,7 +1817,7 @@ static struct platform_driver platform_driver_uniwill = {
 		},
 };
 
-struct tuxedo_keyboard_driver uniwill_keyboard_driver = {
+struct lwl_keyboard_driver uniwill_keyboard_driver = {
 	.platform_driver = &platform_driver_uniwill,
 	.probe = uniwill_keyboard_probe,
 	.key_map = uniwill_wmi_keymap,

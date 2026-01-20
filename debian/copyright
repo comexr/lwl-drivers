@@ -1,10 +1,10 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Source: https://gitlab.com/tuxedocomputers/development/packages/tuxedo-drivers
-Upstream-Name: tuxedo-drivers
-Upstream-Contact: tux@tuxedocomputers.com
+Source: https://gitlab.com/lwlcomputers/development/packages/lwl-drivers
+Upstream-Name: lwl-drivers
+Upstream-Contact: tux@lwlcomputers.com
 
 Files: *
-Copyright: 2018-2025 TUXEDO Computers GmbH <tux@tuxedocomputers.com>
+Copyright: 2018-2025 lwl Computers GmbH <tux@lwlcomputers.com>
 License: GPL-2.0+
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by

@@ -14,11 +14,11 @@ Module.symvers
 /debian/*.substvars
 /debian/debhelper-build-stamp
 /debian/files
-/debian/tuxedo-drivers
+/debian/lwl-drivers
 
 # rpmbuild artifacts
 /src/dkms.conf
-/tuxedo-drivers.spec
+/lwl-drivers.spec
 
 # IDE artifacts
 *.kate-swp

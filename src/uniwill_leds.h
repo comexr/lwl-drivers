@@ -1,8 +1,8 @@
 /* SPDX-License-Identifier: GPL-2.0+ */
 /*!
- * Copyright (c) 2018-2020 TUXEDO Computers GmbH <tux@tuxedocomputers.com>
+ * Copyright (c) 2018-2020 lwl Computers GmbH <tux@lwlcomputers.com>
  *
- * This file is part of tuxedo-drivers.
+ * This file is part of lwl-drivers.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ uniwill_kb_backlight_type_t uniwill_leds_get_backlight_type_extern(void);
 void uniwill_leds_restore_state_extern(void);
 bool uniwill_leds_notify_brightness_change_extern(void);
 
-// TODO The following should go into a seperate .c file, but for this to work more reworking is required in the tuxedo_keyboard structure.
+// TODO The following should go into a seperate .c file, but for this to work more reworking is required in the lwl_keyboard structure.
 
 //#include "uniwill_leds.h"
 
@@ -224,13 +224,13 @@ static struct led_classdev_mc uniwill_mcled_cdev = {
 static const struct dmi_system_id force_no_ec_led_control[] = {
 	{
 		.matches = {
-			DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
+			DMI_MATCH(DMI_SYS_VENDOR, "lwl"),
 			DMI_MATCH(DMI_PRODUCT_SKU, "STELLARIS1XA05"),
 		},
 	},
 	{
 		.matches = {
-			DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
+			DMI_MATCH(DMI_SYS_VENDOR, "lwl"),
 			DMI_MATCH(DMI_PRODUCT_SKU, "STELLSL15I06"),
 		},
 	},
@@ -240,31 +240,31 @@ static const struct dmi_system_id force_no_ec_led_control[] = {
 static const struct dmi_system_id kbl_type_fixed_color_5_levels[] = {
 	{
 		.matches = {
-			DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
+			DMI_MATCH(DMI_SYS_VENDOR, "lwl"),
 			DMI_MATCH(DMI_BOARD_NAME, "GXxHRXx"),
 		},
 	},
 	{
 		.matches = {
-			DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
+			DMI_MATCH(DMI_SYS_VENDOR, "lwl"),
 			DMI_MATCH(DMI_BOARD_NAME, "GXxMRXx"),
 		},
 	},
 	{
 		.matches = {
-			DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
+			DMI_MATCH(DMI_SYS_VENDOR, "lwl"),
 			DMI_MATCH(DMI_BOARD_NAME, "XxHP4NAx"),
 		},
 	},
 	{
 		.matches = {
-			DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
+			DMI_MATCH(DMI_SYS_VENDOR, "lwl"),
 			DMI_MATCH(DMI_BOARD_NAME, "XxKK4NAx_XxSP4NAx"),
 		},
 	},
 	{
 		.matches = {
-			DMI_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
+			DMI_MATCH(DMI_SYS_VENDOR, "lwl"),
 			DMI_MATCH(DMI_BOARD_NAME, "XxAR4NAx"),
 		},
 	},

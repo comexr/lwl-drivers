@@ -1,8 +1,8 @@
 /* SPDX-License-Identifier: GPL-2.0+ */
 /*!
- * Copyright (c) 2021-2024 TUXEDO Computers GmbH <tux@tuxedocomputers.com>
+ * Copyright (c) 2021-2024 lwl Computers GmbH <tux@lwlcomputers.com>
  *
- * This file is part of tuxedo-drivers.
+ * This file is part of lwl-drivers.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
