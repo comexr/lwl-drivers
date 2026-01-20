@@ -4,7 +4,7 @@ Release:        1%{?dist}
 Summary:        Kernel modules for lwl devices
 
 License:        GPLv2+
-Url:            https://www.lwlcomputers.com
+Url:            https://www.laptopwithlinux.com
 Source0:        %{name}-%{version}.tar.xz
 
 Requires:       dkms >= 2.1
@@ -30,7 +30,7 @@ Obsoletes:      lwl-xp-xc-airplane-mode-fix < 4.0.0-1
 Obsoletes:      lwl-xp-xc-touchpad-key-fix < 4.0.0-1
 
 Group:          Hardware/Other
-Packager:       lwl Computers GmbH <tux@lwlcomputers.com>
+Packager:       Comexr B.V. <info@comexr.com>
 
 %description
 Drivers for several platform devices for lwl notebooks meant for DKMS.
