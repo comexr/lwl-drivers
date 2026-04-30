@@ -1,7 +1,7 @@
 name: lwl-drivers
-summary: Kernel modules for TUXEDO devices
-description: Drivers for several platform devices for TUXEDO notebooks meant for DKMS.
-git_url: "https://gitlab.com/tuxedocomputers/development/packages/lwl-drivers"
+summary: Kernel modules for LWL devices
+description: Custom drivers for some laptops sold by Laptop With Linux .
+git_url: "https://github.com/comexr/lwl-drivers.git"
 license: GPL-2.0-or-later
 
 file_map:
