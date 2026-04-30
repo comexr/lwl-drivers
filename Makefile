@@ -1,9 +1,9 @@
 #
 # Copyright (c) 2018-2025 TUXEDO Computers GmbH <tux@tuxedocomputers.com>
 #
-# This file is part of tuxedo-drivers.
+# This file is part of lwl-drivers.
 #
-# tuxedo-drivers is free software; you can redistribute it and/or
+# lwl-drivers is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; version 2
 # of the License.

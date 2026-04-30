@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: GPL-2.0+ */
 /*!
- * Copyright (c) 2024 TUXEDO Computers GmbH <tux@tuxedocomputers.com>
+ * Copyright (c) 2023-2024 TUXEDO Computers GmbH <tux@tuxedocomputers.com>
  *
  * This file is part of lwl-drivers.
  *
@@ -18,31 +18,31 @@
  * with this program; if not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef TUXI_ACPI_H
-#define TUXI_ACPI_H
+#ifndef lwl_NB05_EC_H
+#define lwl_NB05_EC_H
 
-#define TUXI_ACPI_RESOURCE_HID "TUXI0000"
+#define PULSE1403 "TUXEDO Pulse 14 Gen3"
+#define PULSE1404 "TUXEDO Pulse 14 Gen4"
+#define IFLX14I01 "TUXEDO InfinityFlex 14 Gen1"
 
-MODULE_ALIAS("acpi*:" TUXI_ACPI_RESOURCE_HID ":*");
+MODULE_ALIAS("platform:lwl_nb05_ec");
 
-enum tuxi_fan_type {
-	GENERAL = 0,
-	CPU = 1,
-	GPU = 2,
+struct nb05_ec_data_t {
+	u8 ver_major;
+	u8 ver_minor;
+	struct nb05_device_data_t *dev_data;
 };
 
-enum tuxi_fan_mode {
-	AUTO = 0,
-	MANUAL = 1,
+struct nb05_device_data_t {
+	int number_fans;
+	bool fanctl_onereg;
 };
 
-int tuxi_set_fan_speed(u8 fan_index, u8 fan_speed);
-int tuxi_get_fan_speed(u8 fan_index, u8 *fan_speed);
-int tuxi_get_nr_fans(u8 *nr_fans);
-int tuxi_set_fan_mode(enum tuxi_fan_mode mode);
-int tuxi_get_fan_mode(enum tuxi_fan_mode *mode);
-int tuxi_get_fan_type(u8 fan_index, enum tuxi_fan_type *type);
-int tuxi_get_fan_temp(u8 index, u16 *temp);
-int tuxi_get_fan_rpm(u8 index, u16 *rpm);
+void nb05_read_ec_ram(u16 addr, u8 *data);
+void nb05_write_ec_ram(u16 addr, u8 data);
+void nb05_read_ec_fw_version(u8 *major, u8 *minor);
+void nb05_get_ec_data(struct nb05_ec_data_t **ec_data);
+
+const struct dmi_system_id *nb05_match_device(void);
 
 #endif

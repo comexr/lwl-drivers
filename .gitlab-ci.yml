@@ -6,4 +6,4 @@ include:
     inputs:
       spc_args: ""
       server_user: "deploy-deb-fixes"
-      deploy_base_dir: "deb/tuxedo-fixes"
+      deploy_base_dir: "deb/lwl-fixes"

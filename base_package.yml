@@ -1,7 +1,7 @@
-name: tuxedo-drivers
+name: lwl-drivers
 summary: Kernel modules for TUXEDO devices
 description: Drivers for several platform devices for TUXEDO notebooks meant for DKMS.
-git_url: "https://gitlab.com/tuxedocomputers/development/packages/tuxedo-drivers"
+git_url: "https://gitlab.com/tuxedocomputers/development/packages/lwl-drivers"
 license: GPL-2.0-or-later
 
 file_map:
@@ -10,33 +10,33 @@ file_map:
 dkms_modules:
   - ["clevo_acpi", "/kernel/lib/"]
   - ["clevo_wmi", "/kernel/lib/"]
-  - ["tuxedo_keyboard", "/kernel/lib/"]
+  - ["lwl_keyboard", "/kernel/lib/"]
   - ["uniwill_wmi", "/kernel/lib/"]
   - ["ite_8291", "/kernel/lib/", "ite_8291/"]
   - ["ite_8291_lb", "/kernel/lib/", "ite_8291_lb/"]
   - ["ite_8297", "/kernel/lib/", "ite_8297/"]
   - ["ite_829x", "/kernel/lib/", "ite_829x/"]
-  - ["tuxedo_io", "/kernel/lib/", "tuxedo_io"]
-  - ["tuxedo_compatibility_check", "/kernel/lib/", "tuxedo_compatibility_check"]
-  - ["tuxedo_nb05_keyboard", "/kernel/lib/", "tuxedo_nb05"]
-  - ["tuxedo_nb05_power_profiles", "/kernel/lib/", "tuxedo_nb05"]
-  - ["tuxedo_nb05_ec", "/kernel/lib/", "tuxedo_nb05"]
-  - ["tuxedo_nb05_sensors", "/kernel/lib/", "tuxedo_nb05"]
-  - ["tuxedo_nb04_keyboard", "/kernel/lib/", "tuxedo_nb04"]
-  - ["tuxedo_nb04_wmi_ab", "/kernel/lib/", "tuxedo_nb04"]
-  - ["tuxedo_nb04_wmi_bs", "/kernel/lib/", "tuxedo_nb04"]
-  - ["tuxedo_nb04_sensors", "/kernel/lib/", "tuxedo_nb04"]
-  - ["tuxedo_nb04_power_profiles", "/kernel/lib/", "tuxedo_nb04"]
-  - ["tuxedo_nb04_kbd_backlight", "/kernel/lib/", "tuxedo_nb04"]
-  - ["tuxedo_nb05_kbd_backlight", "/kernel/lib/", "tuxedo_nb05"]
+  - ["lwl_io", "/kernel/lib/", "lwl_io"]
+  - ["lwl_compatibility_check", "/kernel/lib/", "lwl_compatibility_check"]
+  - ["lwl_nb05_keyboard", "/kernel/lib/", "lwl_nb05"]
+  - ["lwl_nb05_power_profiles", "/kernel/lib/", "lwl_nb05"]
+  - ["lwl_nb05_ec", "/kernel/lib/", "lwl_nb05"]
+  - ["lwl_nb05_sensors", "/kernel/lib/", "lwl_nb05"]
+  - ["lwl_nb04_keyboard", "/kernel/lib/", "lwl_nb04"]
+  - ["lwl_nb04_wmi_ab", "/kernel/lib/", "lwl_nb04"]
+  - ["lwl_nb04_wmi_bs", "/kernel/lib/", "lwl_nb04"]
+  - ["lwl_nb04_sensors", "/kernel/lib/", "lwl_nb04"]
+  - ["lwl_nb04_power_profiles", "/kernel/lib/", "lwl_nb04"]
+  - ["lwl_nb04_kbd_backlight", "/kernel/lib/", "lwl_nb04"]
+  - ["lwl_nb05_kbd_backlight", "/kernel/lib/", "lwl_nb05"]
   - [
-      "tuxedo_nb02_nvidia_power_ctrl",
+      "lwl_nb02_nvidia_power_ctrl",
       "/kernel/lib/",
-      "tuxedo_nb02_nvidia_power_ctrl",
+      "lwl_nb02_nvidia_power_ctrl",
     ]
-  - ["tuxedo_nb05_fan_control", "/kernel/lib/", "tuxedo_nb05"]
-  - ["tuxi_acpi", "/kernel/lib/", "tuxedo_tuxi"]
-  - ["tuxedo_tuxi_fan_control", "/kernel/lib/", "tuxedo_tuxi"]
+  - ["lwl_nb05_fan_control", "/kernel/lib/", "lwl_nb05"]
+  - ["tuxi_acpi", "/kernel/lib/", "lwl_tuxi"]
+  - ["lwl_tuxi_fan_control", "/kernel/lib/", "lwl_tuxi"]
   - ["stk8321", "/kernel/lib/", "stk8321"]
   - ["gxtp7380", "/kernel/lib/", "gxtp7380"]
 
@@ -47,8 +47,8 @@ recommends:
   - udev-hid-bpf
 
 replaces:
-  - tuxedo-keyboard-dkms
-  - tuxedo-keyboard-ite-dkms
+  - lwl-keyboard-dkms
+  - lwl-keyboard-ite-dkms
 
 changelog:
   - version: "4.22.2"
@@ -155,12 +155,12 @@ changelog:
     author: "Tim Guttzeit"
     date: 2025-08-18 10:12:21
     entries:
-      - "change tuxedo-linux-firmware-amdgpu to Recommends"
+      - "change lwl-linux-firmware-amdgpu to Recommends"
   - version: "4.15.1"
     author: "Maximilian Arnold"
     date: 2025-08-14 13:58:20
     entries:
-      - "add tuxedo-linux-firmware-amdgpu as Depends"
+      - "add lwl-linux-firmware-amdgpu as Depends"
   - version: "4.15.0"
     author: "Tim Guttzeit"
     date: 2025-08-06 05:53:44
@@ -174,7 +174,7 @@ changelog:
     author: "Tim Guttzeit"
     date: 2025-07-30 10:20:22
     entries:
-      - "Move udev rules from tuxedo-fix-config-files into tuxedo-drivers"
+      - "Move udev rules from lwl-fix-config-files into lwl-drivers"
   - version: "4.14.3"
     author: "Werner Sembach"
     date: 2025-07-15 14:14:19
@@ -458,8 +458,8 @@ changelog:
     author: "Christoffer Sandberg"
     date: 2020-03-17 15:54:00
     entries:
-      - "Merge tuxedo-keyboard and tuxedo-keyboard-ite"
-      - "Rename package to tuxedo-drivers"
+      - "Merge lwl-keyboard and lwl-keyboard-ite"
+      - "Rename package to lwl-drivers"
       - "Rework packaging process"
       - "Fn-lock sysfs interface for nb02 and nb01 (newer models with CCC from v4.0)"
       - "Flexicharger sysfs interface for nb01 (new plus legacy which works on some"
@@ -524,7 +524,7 @@ changelog:
       - "Add Stellaris (gen3) lightbar support"
       - "Fix kernel 5.13 build issue (from github BlackIkeEagle)"
       - "Add another Fusion lightbar ID (from github ArlindoFNeto)"
-      - "Add tuxedo-io perf. prof. set (cl)"
+      - "Add lwl-io perf. prof. set (cl)"
       - "Add NS50MU to perf. profile workaround"
       - "Add EDUBOOK1502 to perf. profile workaround"
       - "Add XP gen 11 & 12 to perf. profile workaround"
@@ -545,7 +545,7 @@ changelog:
       - "Changed structure of clevo interfaces"
       - "Added separate clevo-wmi module with existing functionality"
       - Added clevo-acpi module with implementation of the "new" clevo ACPI
-      - "Added tuxedo-io module (former tuxedo-cc-wmi) into package"
+      - "Added lwl-io module (former lwl-cc-wmi) into package"
       - "Added initial support for ITE Device(8291) ->  048d:ce00"
       - "Added device support (XMG Fusion)"
       - "Added uniwill lightbar driver (with led_classdev interface)"
@@ -566,7 +566,7 @@ changelog:
       - "Events added for backlight and touchpad"
       - "Fix not restoring state on resume"
       - "Fix module autoload issues"
-      - "Add standard config tuxedo_keyboard.conf to package"
+      - "Add standard config lwl_keyboard.conf to package"
       - "First version of the ITE keyboard backlight driver"
       - "Has support for ITE Device(829x) ->  0x048d:0x8910"
       - "New packaging"

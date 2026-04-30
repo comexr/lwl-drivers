@@ -9,4 +9,4 @@ fi
 
 status="$(dkms status)"
 
-echo $status | grep -v "tuxedo-drivers" # Make sure dkms module is removed
+echo $status | grep -v "lwl-drivers" # Make sure dkms module is removed
