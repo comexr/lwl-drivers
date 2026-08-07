@@ -6,7 +6,7 @@ include:
     inputs:
       spc_args: ""
       server_user: "deploy-deb-fixes"
-      deploy_base_dir: "deb/tuxedo-fixes"
+      deploy_base_dir: "deb/lwl-fixes"
       test_mode: "tag"
-      test_issue_project_path: "tuxedocomputers/development/packages/tuxedo-drivers"
+      test_issue_project_path: "tuxedocomputers/development/packages/lwl-drivers"
       release_tag_ignore_pattern: "rc"

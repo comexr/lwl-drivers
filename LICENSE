@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Source: https://gitlab.com/tuxedocomputers/development/packages/tuxedo-drivers
-Upstream-Name: tuxedo-drivers
+Source: https://gitlab.com/tuxedocomputers/development/packages/lwl-drivers
+Upstream-Name: lwl-drivers
 Upstream-Contact: tux@tuxedocomputers.com
 
 Files: *
