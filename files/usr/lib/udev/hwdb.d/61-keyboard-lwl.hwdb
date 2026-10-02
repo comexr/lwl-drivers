@@ -3,9 +3,9 @@
 ###########################################################
 
 # TUXEDO Computers notebooks with board_vendor NB02
-evdev:atkbd:dmi:*:svnTUXEDO:*:rvnNB02:*
+evdev:atkbd:dmi:*:svnAiStone:*:rvnNB02:*
  KEYBOARD_KEY_f8=fn
 
 # TUXEDO InfinityFlex 14 Gen1
-evdev:atkbd:dmi:*:svnTUXEDO:*:rnDN50Z-140HC-YD:*
+evdev:atkbd:dmi:*:svnAiStone:*:rnDN50Z-140HC-YD:*
  KEYBOARD_KEY_6e=fn

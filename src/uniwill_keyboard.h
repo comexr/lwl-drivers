@@ -965,7 +965,10 @@ static int is_auto_boot_and_powershare_supported(bool *status)
 		  dmi_match(DMI_BOARD_NAME, "GXxHRXx") ||
 		  // IBP Gen10
 		  dmi_match(DMI_BOARD_NAME, "XxHP4NAx") ||
-		  dmi_match(DMI_BOARD_NAME, "XxKK4NAx_XxSP4NAx") ||
+		  dmi_match(DMI_BOARD_NAME, "X4KK4NAL") ||
+		  dmi_match(DMI_BOARD_NAME, "X4SP4NAL") ||
+		  dmi_match(DMI_BOARD_NAME, "X5KK4NAG") ||
+		  dmi_match(DMI_BOARD_NAME, "X5SP4NAG") ||
 		  dmi_match(DMI_BOARD_NAME, "XxAR4NAx") ||
 
 		  // Stellaris Gen6
@@ -973,9 +976,12 @@ static int is_auto_boot_and_powershare_supported(bool *status)
 		  dmi_match(DMI_BOARD_NAME, "GM6IXxB_MB2") ||
 		  dmi_match(DMI_BOARD_NAME, "GM7IXxN") ||
 		  // Stellaris Gen7
-		  dmi_match(DMI_BOARD_NAME, "X6AR5xxY") ||
-		  dmi_match(DMI_BOARD_NAME, "X6AR5xxY_mLED") ||
-		  dmi_match(DMI_BOARD_NAME, "X6FR5xxY") ||
+		  dmi_match(DMI_BOARD_NAME, "X6AR57TY") ||
+		  dmi_match(DMI_BOARD_NAME, "X6AR558Y") ||
+		  dmi_match(DMI_BOARD_NAME, "X6AR559Y") ||
+		  dmi_match(DMI_BOARD_NAME, "X6FR57TY") ||
+		  dmi_match(DMI_BOARD_NAME, "X6FR558Y") ||
+		  dmi_match(DMI_BOARD_NAME, "X6FR559Y") ||
 
 		  // Stellaris Slim Gen6
 		  dmi_match(DMI_BOARD_NAME, "GMxHGxx") ||
@@ -1444,8 +1450,9 @@ static int uw_has_hidden_bios_options(bool *status)
 {
 	*status = false
 		// Stellaris 16 G7
-		|| dmi_match(DMI_BOARD_NAME, "X6AR5xxY")
-		|| dmi_match(DMI_BOARD_NAME, "X6AR5xxY_mLED")
+		|| dmi_match(DMI_BOARD_NAME, "X6AR57TY")
+		|| dmi_match(DMI_BOARD_NAME, "X6AR558Y")
+		|| dmi_match(DMI_BOARD_NAME, "X6AR559Y")
 		// IBM 16 G10
 		|| dmi_match(DMI_BOARD_NAME, "X6AR55xU");
 	return 0;
@@ -1651,7 +1658,9 @@ static int has_universal_ec_fan_control(void) {
 		// off reliably, however, the old fan control works.
 		|| dmi_match(DMI_BOARD_NAME, "GXxMRXx")
 		|| dmi_match(DMI_BOARD_NAME, "XxAR4NAx")
-		|| dmi_match(DMI_BOARD_NAME, "X6FR5xxY")
+		|| dmi_match(DMI_BOARD_NAME, "X6FR57TY")
+		|| dmi_match(DMI_BOARD_NAME, "X6FR558Y")
+		|| dmi_match(DMI_BOARD_NAME, "X6FR559Y")
 		|| dmi_match(DMI_BOARD_NAME, "X5AR45xS")
 	;
 
@@ -1720,7 +1729,10 @@ struct uniwill_device_features_t *uniwill_get_device_features(void)
 		|| dmi_match(DMI_BOARD_NAME, "GXxMRXx")
 		|| dmi_match(DMI_BOARD_NAME, "GXxHRXx")
 		|| dmi_match(DMI_BOARD_NAME, "XxHP4NAx")
-		|| dmi_match(DMI_BOARD_NAME, "XxKK4NAx_XxSP4NAx")
+		|| dmi_match(DMI_BOARD_NAME, "X4KK4NAL")
+		|| dmi_match(DMI_BOARD_NAME, "X4SP4NAL")
+		|| dmi_match(DMI_BOARD_NAME, "X5KK4NAG")
+		|| dmi_match(DMI_BOARD_NAME, "X5SP4NAG")
 		|| dmi_match(DMI_BOARD_NAME, "XxAR4NAx")
 
 		// Note: XMG Fusion removed for now, seem to have
@@ -1748,14 +1760,21 @@ struct uniwill_device_features_t *uniwill_get_device_features(void)
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 18, 0)
 		|| dmi_match(DMI_PRODUCT_SKU, "STELLARIS16I06")
 		|| dmi_match(DMI_PRODUCT_SKU, "STELLARIS17I06")
-		|| dmi_match(DMI_PRODUCT_SKU, "STELLARIS16I07")
-		|| dmi_match(DMI_PRODUCT_SKU, "STELLARIS16A07")
+		|| dmi_match(DMI_BOARD_NAME, "X6AR57TY")
+		|| dmi_match(DMI_BOARD_NAME, "X6AR558TY")
+		|| dmi_match(DMI_BOARD_NAME, "X6AR559Y")
+		|| dmi_match(DMI_BOARD_NAME, "X6FR57TY")
+		|| dmi_match(DMI_BOARD_NAME, "X6FR558TY")
+		|| dmi_match(DMI_BOARD_NAME, "X6FR559Y")
 		|| dmi_match(DMI_PRODUCT_SKU, "STELLSL15I06")
 		|| dmi_match(DMI_PRODUCT_SKU, "STELLSL15A06")
 		|| dmi_match(DMI_BOARD_NAME, "GXxMRXx")
 		|| dmi_match(DMI_BOARD_NAME, "GXxHRXx")
 		|| dmi_match(DMI_BOARD_NAME, "XxHP4NAx")
-		|| dmi_match(DMI_BOARD_NAME, "XxKK4NAx_XxSP4NAx")
+		|| dmi_match(DMI_BOARD_NAME, "X4KK4NAL")
+		|| dmi_match(DMI_BOARD_NAME, "X4SP4NAL")
+		|| dmi_match(DMI_BOARD_NAME, "X5KK4NAG")
+		|| dmi_match(DMI_BOARD_NAME, "X5SP4NAG")
 		|| dmi_match(DMI_BOARD_NAME, "X5KK45xS_X5SP45xS")
 		|| dmi_match(DMI_BOARD_NAME, "X6KK45xU_X6SP45xU")
 		|| dmi_match(DMI_BOARD_NAME, "X6AR55xU")
