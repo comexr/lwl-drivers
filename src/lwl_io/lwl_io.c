@@ -237,9 +237,9 @@ static void uw_id_tdp(void)
 	} else if (dmi_match(DMI_PRODUCT_SKU, "STELLSL15A06")) {
 		tdp_min_defs = tdp_min_gmxhgxa;
 		tdp_max_defs = tdp_max_gmxhgxa;
-	} else if (dmi_match(DMI_PRODUCT_SKU, "X6AR57TY") ||
-		   dmi_match(DMI_PRODUCT_SKU, "X6AR558Y") ||
-		   dmi_match(DMI_PRODUCT_SKU, "X6AR559Y")) {
+	} else if (dmi_match(DMI_PRODUCT_NAME, "X6AR57TY") ||
+		   dmi_match(DMI_PRODUCT_NAME, "X6AR558Y") ||
+		   dmi_match(DMI_PRODUCT_NAME, "X6AR559Y")) {
 		tdp_min_defs = tdp_min_x6ar5xx;
 		tdp_max_defs = tdp_max_x6ar5xx;
 	} else if (dmi_match(DMI_PRODUCT_NAME, "X6FR57TY") ||
