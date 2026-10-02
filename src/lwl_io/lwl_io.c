@@ -242,9 +242,9 @@ static void uw_id_tdp(void)
 		   dmi_match(DMI_PRODUCT_SKU, "X6AR559Y")) {
 		tdp_min_defs = tdp_min_x6ar5xx;
 		tdp_max_defs = tdp_max_x6ar5xx;
-	} else if (dmi_match(DMI_PRODUCT_SKU, "X6FR57TY") ||
-		   dmi_match(DMI_PRODUCT_SKU, "X6FR558Y") ||
-		   dmi_match(DMI_PRODUCT_SKU, "X6FR559Y")) {
+	} else if (dmi_match(DMI_PRODUCT_NAME, "X6FR57TY") ||
+		   dmi_match(DMI_PRODUCT_NAME, "X6FR558Y") ||
+		   dmi_match(DMI_PRODUCT_NAME, "X6FR559Y")) {
 		tdp_min_defs = tdp_min_x6fr5xx;
 		tdp_max_defs = tdp_max_x6fr5xx;
 	} else if (dmi_match(DMI_BOARD_NAME, "X5KK45xS_X5SP45xS")) {
