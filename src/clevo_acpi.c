@@ -22,6 +22,7 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/acpi.h>
+#include <linux/platform_device.h>
 #include <linux/version.h>
 #include "clevo_interfaces.h"
 
@@ -164,45 +165,9 @@ struct clevo_interface_t clevo_acpi_interface = {
 	.method_call_pkgbuf = clevo_acpi_interface_method_call_pkgbuf,
 };
 
-static int clevo_acpi_add(struct acpi_device *device)
+static void clevo_acpi_notify(acpi_handle handle, u32 event, void *context)
 {
-	struct clevo_acpi_driver_data_t *driver_data;
-
-	driver_data = devm_kzalloc(&device->dev, sizeof(*driver_data), GFP_KERNEL);
-	if (!driver_data)
-		return -ENOMEM;
-
-	driver_data->adev = device;
-	driver_data->clevo_interface = &clevo_acpi_interface;
-
-	active_driver_data = driver_data;
-
-	pr_debug("clevo_acpi driver add\n");
-
-	// Add this interface
-	clevo_keyboard_add_interface(&clevo_acpi_interface);
-
-	pr_info("interface initialized\n");
-
-	return 0;
-}
-
-#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 2, 0)
-static int clevo_acpi_remove(struct acpi_device *device)
-#else
-static void clevo_acpi_remove(struct acpi_device *device)
-#endif
-{
-	pr_debug("clevo_acpi driver remove\n");
-	clevo_keyboard_remove_interface(&clevo_acpi_interface);
-	active_driver_data = NULL;
-#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 2, 0)
-	return 0;
-#endif
-}
-
-static void clevo_acpi_notify(struct acpi_device *device, u32 event)
-{
+	struct acpi_device *device = context;
 	u32 event_value;
 	union acpi_object *out_obj;
 	int status;
@@ -226,6 +191,53 @@ static void clevo_acpi_notify(struct acpi_device *device, u32 event)
 	}
 }
 
+static int clevo_acpi_probe(struct platform_device *pdev)
+{
+	struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
+	struct clevo_acpi_driver_data_t *driver_data;
+	int err;
+
+	if (!device)
+		return -ENODEV;
+
+	driver_data = devm_kzalloc(&pdev->dev, sizeof(*driver_data), GFP_KERNEL);
+	if (!driver_data)
+		return -ENOMEM;
+
+	driver_data->adev = device;
+	driver_data->clevo_interface = &clevo_acpi_interface;
+
+	err = devm_acpi_install_notify_handler(&pdev->dev, ACPI_ALL_NOTIFY,
+					       clevo_acpi_notify, device);
+	if (err)
+		return err;
+
+	active_driver_data = driver_data;
+
+	pr_debug("clevo_acpi driver add\n");
+
+	// Add this interface
+	clevo_keyboard_add_interface(&clevo_acpi_interface);
+
+	pr_info("interface initialized\n");
+
+	return 0;
+}
+
+#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 11, 0)
+static int clevo_acpi_remove(struct platform_device *pdev)
+#else
+static void clevo_acpi_remove(struct platform_device *pdev)
+#endif
+{
+	pr_debug("clevo_acpi driver remove\n");
+	clevo_keyboard_remove_interface(&clevo_acpi_interface);
+	active_driver_data = NULL;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 11, 0)
+	return 0;
+#endif
+}
+
 #ifdef CONFIG_PM
 static int driver_suspend_callb(struct device *dev)
 {
@@ -247,25 +259,19 @@ static const struct acpi_device_id clevo_acpi_device_ids[] = {
 	{"", 0}
 };
 
-static struct acpi_driver clevo_acpi_driver = {
-	.name = DRIVER_NAME,
-	.class = DRIVER_NAME,
-#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 10, 0)
-	.owner = THIS_MODULE,
-#endif
-	.ids = clevo_acpi_device_ids,
-	.flags = ACPI_DRIVER_ALL_NOTIFY_EVENTS,
-	.ops = {
-		.add = clevo_acpi_add,
-		.remove = clevo_acpi_remove,
-		.notify = clevo_acpi_notify,
-	},
+static struct platform_driver clevo_acpi_driver = {
+	.probe = clevo_acpi_probe,
+	.remove = clevo_acpi_remove,
+	.driver = {
+		.name = DRIVER_NAME,
+		.acpi_match_table = clevo_acpi_device_ids,
 #ifdef CONFIG_PM
-	.drv.pm = &clevo_driver_pm_ops
+		.pm = &clevo_driver_pm_ops,
 #endif
+	},
 };
 
-module_acpi_driver(clevo_acpi_driver);
+module_platform_driver(clevo_acpi_driver);
 
 MODULE_AUTHOR("TUXEDO Computers GmbH <tux@tuxedocomputers.com>");
 MODULE_DESCRIPTION("Driver for Clevo ACPI interface");
