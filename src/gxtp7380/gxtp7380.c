@@ -22,31 +22,48 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/acpi.h>
+#include <linux/platform_device.h>
 #include <linux/version.h>
 
 #define DRIVER_NAME "gxtp7380"
 
-static int gxtp7380_add(struct acpi_device *device)
+static void gxtp7380_notify(acpi_handle handle, u32 event, void *context)
 {
+	struct acpi_device *device = context;
+
+	kobject_uevent(&device->dev.kobj, KOBJ_CHANGE);
+}
+
+static int gxtp7380_probe(struct platform_device *pdev)
+{
+	struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
+	int err;
+
+	if (!device)
+		return -ENODEV;
+
+	err = devm_acpi_install_notify_handler(&pdev->dev, ACPI_ALL_NOTIFY,
+					       gxtp7380_notify, device);
+	if (err)
+		return err;
+
 	kobject_uevent(&device->dev.kobj, KOBJ_ADD);
 	return 0;
 }
 
-#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 2, 0)
-static int gxtp7380_remove(struct acpi_device *device)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 11, 0)
+static int gxtp7380_remove(struct platform_device *pdev)
 #else
-static void gxtp7380_remove(struct acpi_device *device)
+static void gxtp7380_remove(struct platform_device *pdev)
 #endif
 {
-	kobject_uevent(&device->dev.kobj, KOBJ_REMOVE);
-#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 2, 0)
+	struct acpi_device *device = ACPI_COMPANION(&pdev->dev);
+
+	if (device)
+		kobject_uevent(&device->dev.kobj, KOBJ_REMOVE);
+#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 11, 0)
 	return 0;
 #endif
-}
-
-static void gxtp7380_notify(struct acpi_device *device, u32 event)
-{
-	kobject_uevent(&device->dev.kobj, KOBJ_CHANGE);
 }
 
 static const struct acpi_device_id gxtp7380_device_ids[] = {
@@ -54,19 +71,16 @@ static const struct acpi_device_id gxtp7380_device_ids[] = {
 	{ "", 0 }
 };
 
-static struct acpi_driver gxtp7380_driver = {
-	.name = DRIVER_NAME,
-	.class = DRIVER_NAME,
-	.ids = gxtp7380_device_ids,
-	.flags = ACPI_DRIVER_ALL_NOTIFY_EVENTS,
-	.ops = {
-		.add = gxtp7380_add,
-		.remove = gxtp7380_remove,
-		.notify = gxtp7380_notify,
+static struct platform_driver gxtp7380_driver = {
+	.probe = gxtp7380_probe,
+	.remove = gxtp7380_remove,
+	.driver = {
+		.name = DRIVER_NAME,
+		.acpi_match_table = gxtp7380_device_ids,
 	},
 };
 
-module_acpi_driver(gxtp7380_driver);
+module_platform_driver(gxtp7380_driver);
 
 MODULE_AUTHOR("TUXEDO Computers GmbH <tux@tuxedocomputers.com>");
 MODULE_DESCRIPTION("Touch panel disable, notify driver");
